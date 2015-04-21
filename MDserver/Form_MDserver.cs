@@ -1629,6 +1629,16 @@ namespace MDserver
             }
         }
 
+        private void button_SecureCRT_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(BaseDir + "tool/SecureCRT/SecureCRT.exe");
+        }
+
+        private void button_HeidiSQL_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(BaseDir + "tool/HeidiSQL/heidisql.exe");
+        }
+
 
     }
 }

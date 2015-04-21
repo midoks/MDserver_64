@@ -51,6 +51,8 @@
             this.button_Rythem = new System.Windows.Forms.Button();
             this.button_shell = new System.Windows.Forms.Button();
             this.groupBox_tool = new System.Windows.Forms.GroupBox();
+            this.button_HeidiSQL = new System.Windows.Forms.Button();
+            this.button_SecureCRT = new System.Windows.Forms.Button();
             this.button_WinCacheGrind = new System.Windows.Forms.Button();
             this.button_VIM = new System.Windows.Forms.Button();
             this.button_mod_host = new System.Windows.Forms.Button();
@@ -113,7 +115,7 @@
             this.statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel_notice,
             this.toolStripStatusLabel_show});
-            this.statusStrip_main.Location = new System.Drawing.Point(0, 283);
+            this.statusStrip_main.Location = new System.Drawing.Point(0, 278);
             this.statusStrip_main.Name = "statusStrip_main";
             this.statusStrip_main.Size = new System.Drawing.Size(636, 22);
             this.statusStrip_main.TabIndex = 14;
@@ -136,9 +138,9 @@
             this.button_openserver.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_openserver.Location = new System.Drawing.Point(8, 73);
             this.button_openserver.Name = "button_openserver";
-            this.button_openserver.Size = new System.Drawing.Size(99, 23);
+            this.button_openserver.Size = new System.Drawing.Size(75, 23);
             this.button_openserver.TabIndex = 0;
-            this.button_openserver.Text = "查看window服务";
+            this.button_openserver.Text = "查看服务";
             this.button_openserver.UseVisualStyleBackColor = true;
             this.button_openserver.Click += new System.EventHandler(this.button_openserver_Click);
             // 
@@ -147,9 +149,9 @@
             this.button_exit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_exit.Location = new System.Drawing.Point(8, 100);
             this.button_exit.Name = "button_exit";
-            this.button_exit.Size = new System.Drawing.Size(100, 23);
+            this.button_exit.Size = new System.Drawing.Size(75, 23);
             this.button_exit.TabIndex = 1;
-            this.button_exit.Text = "退出MDserver";
+            this.button_exit.Text = "退出程序";
             this.button_exit.UseVisualStyleBackColor = true;
             this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
             // 
@@ -158,7 +160,7 @@
             this.button_listen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_listen.Location = new System.Drawing.Point(8, 46);
             this.button_listen.Name = "button_listen";
-            this.button_listen.Size = new System.Drawing.Size(99, 23);
+            this.button_listen.Size = new System.Drawing.Size(75, 23);
             this.button_listen.TabIndex = 2;
             this.button_listen.Text = "开始监听";
             this.button_listen.UseVisualStyleBackColor = true;
@@ -170,27 +172,27 @@
             this.groupBox_manage.Controls.Add(this.button_listen);
             this.groupBox_manage.Controls.Add(this.button_exit);
             this.groupBox_manage.Controls.Add(this.button_openserver);
-            this.groupBox_manage.Location = new System.Drawing.Point(324, 13);
+            this.groupBox_manage.Location = new System.Drawing.Point(313, 13);
             this.groupBox_manage.Name = "groupBox_manage";
-            this.groupBox_manage.Size = new System.Drawing.Size(115, 134);
+            this.groupBox_manage.Size = new System.Drawing.Size(94, 134);
             this.groupBox_manage.TabIndex = 17;
             this.groupBox_manage.TabStop = false;
-            this.groupBox_manage.Text = "MDserver常规管理";
+            this.groupBox_manage.Text = "常规管理";
             // 
             // button_regedit
             // 
             this.button_regedit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_regedit.Location = new System.Drawing.Point(8, 18);
             this.button_regedit.Name = "button_regedit";
-            this.button_regedit.Size = new System.Drawing.Size(99, 23);
+            this.button_regedit.Size = new System.Drawing.Size(75, 23);
             this.button_regedit.TabIndex = 3;
-            this.button_regedit.Text = "查看注册表";
+            this.button_regedit.Text = "注册表";
             this.button_regedit.UseVisualStyleBackColor = true;
             this.button_regedit.Click += new System.EventHandler(this.button_regedit_Click);
             // 
             // button_stop
             // 
-            this.button_stop.Location = new System.Drawing.Point(540, 225);
+            this.button_stop.Location = new System.Drawing.Point(540, 221);
             this.button_stop.Name = "button_stop";
             this.button_stop.Size = new System.Drawing.Size(91, 40);
             this.button_stop.TabIndex = 2;
@@ -216,7 +218,7 @@
             this.groupBox_sql.Controls.Add(this.radioButton_MySQL);
             this.groupBox_sql.Controls.Add(this.checkBox_Redis);
             this.groupBox_sql.Controls.Add(this.checkBox_memcached);
-            this.groupBox_sql.Location = new System.Drawing.Point(104, 12);
+            this.groupBox_sql.Location = new System.Drawing.Point(99, 12);
             this.groupBox_sql.Name = "groupBox_sql";
             this.groupBox_sql.Size = new System.Drawing.Size(100, 135);
             this.groupBox_sql.TabIndex = 8;
@@ -261,9 +263,9 @@
             this.button_ftp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button_ftp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_ftp.ForeColor = System.Drawing.Color.Black;
-            this.button_ftp.Location = new System.Drawing.Point(6, 75);
+            this.button_ftp.Location = new System.Drawing.Point(5, 75);
             this.button_ftp.Name = "button_ftp";
-            this.button_ftp.Size = new System.Drawing.Size(86, 23);
+            this.button_ftp.Size = new System.Drawing.Size(77, 23);
             this.button_ftp.TabIndex = 7;
             this.button_ftp.Text = "Flashfxp";
             this.button_ftp.UseVisualStyleBackColor = true;
@@ -273,9 +275,9 @@
             // 
             this.button_putty.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button_putty.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_putty.Location = new System.Drawing.Point(6, 48);
+            this.button_putty.Location = new System.Drawing.Point(84, 47);
             this.button_putty.Name = "button_putty";
-            this.button_putty.Size = new System.Drawing.Size(86, 23);
+            this.button_putty.Size = new System.Drawing.Size(59, 23);
             this.button_putty.TabIndex = 8;
             this.button_putty.Text = "Putty";
             this.button_putty.UseVisualStyleBackColor = true;
@@ -284,9 +286,9 @@
             // button_WinSCP
             // 
             this.button_WinSCP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_WinSCP.Location = new System.Drawing.Point(99, 48);
+            this.button_WinSCP.Location = new System.Drawing.Point(84, 73);
             this.button_WinSCP.Name = "button_WinSCP";
-            this.button_WinSCP.Size = new System.Drawing.Size(87, 23);
+            this.button_WinSCP.Size = new System.Drawing.Size(59, 23);
             this.button_WinSCP.TabIndex = 9;
             this.button_WinSCP.Text = "WinSCP";
             this.button_WinSCP.UseVisualStyleBackColor = true;
@@ -295,9 +297,9 @@
             // button_calc
             // 
             this.button_calc.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_calc.Location = new System.Drawing.Point(99, 101);
+            this.button_calc.Location = new System.Drawing.Point(84, 101);
             this.button_calc.Name = "button_calc";
-            this.button_calc.Size = new System.Drawing.Size(87, 23);
+            this.button_calc.Size = new System.Drawing.Size(59, 23);
             this.button_calc.TabIndex = 10;
             this.button_calc.Text = "计算器";
             this.button_calc.UseVisualStyleBackColor = true;
@@ -306,9 +308,9 @@
             // button_Rythem
             // 
             this.button_Rythem.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_Rythem.Location = new System.Drawing.Point(99, 19);
+            this.button_Rythem.Location = new System.Drawing.Point(84, 19);
             this.button_Rythem.Name = "button_Rythem";
-            this.button_Rythem.Size = new System.Drawing.Size(87, 23);
+            this.button_Rythem.Size = new System.Drawing.Size(59, 23);
             this.button_Rythem.TabIndex = 11;
             this.button_Rythem.Text = "Rythem";
             this.button_Rythem.UseVisualStyleBackColor = true;
@@ -317,9 +319,9 @@
             // button_shell
             // 
             this.button_shell.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_shell.Location = new System.Drawing.Point(6, 19);
+            this.button_shell.Location = new System.Drawing.Point(5, 19);
             this.button_shell.Name = "button_shell";
-            this.button_shell.Size = new System.Drawing.Size(86, 23);
+            this.button_shell.Size = new System.Drawing.Size(77, 23);
             this.button_shell.TabIndex = 12;
             this.button_shell.Text = "执行Shell";
             this.button_shell.UseVisualStyleBackColor = true;
@@ -327,6 +329,8 @@
             // 
             // groupBox_tool
             // 
+            this.groupBox_tool.Controls.Add(this.button_HeidiSQL);
+            this.groupBox_tool.Controls.Add(this.button_SecureCRT);
             this.groupBox_tool.Controls.Add(this.button_WinCacheGrind);
             this.groupBox_tool.Controls.Add(this.button_VIM);
             this.groupBox_tool.Controls.Add(this.button_calc);
@@ -335,19 +339,41 @@
             this.groupBox_tool.Controls.Add(this.button_WinSCP);
             this.groupBox_tool.Controls.Add(this.button_putty);
             this.groupBox_tool.Controls.Add(this.button_ftp);
-            this.groupBox_tool.Location = new System.Drawing.Point(445, 12);
+            this.groupBox_tool.Location = new System.Drawing.Point(410, 12);
             this.groupBox_tool.Name = "groupBox_tool";
-            this.groupBox_tool.Size = new System.Drawing.Size(192, 135);
+            this.groupBox_tool.Size = new System.Drawing.Size(221, 135);
             this.groupBox_tool.TabIndex = 10;
             this.groupBox_tool.TabStop = false;
             this.groupBox_tool.Text = "小工具";
             // 
+            // button_HeidiSQL
+            // 
+            this.button_HeidiSQL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_HeidiSQL.Location = new System.Drawing.Point(145, 48);
+            this.button_HeidiSQL.Name = "button_HeidiSQL";
+            this.button_HeidiSQL.Size = new System.Drawing.Size(69, 23);
+            this.button_HeidiSQL.TabIndex = 16;
+            this.button_HeidiSQL.Text = "HeidiSQL";
+            this.button_HeidiSQL.UseVisualStyleBackColor = true;
+            this.button_HeidiSQL.Click += new System.EventHandler(this.button_HeidiSQL_Click);
+            // 
+            // button_SecureCRT
+            // 
+            this.button_SecureCRT.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_SecureCRT.Location = new System.Drawing.Point(6, 48);
+            this.button_SecureCRT.Name = "button_SecureCRT";
+            this.button_SecureCRT.Size = new System.Drawing.Size(76, 23);
+            this.button_SecureCRT.TabIndex = 15;
+            this.button_SecureCRT.Text = "SecureCRT";
+            this.button_SecureCRT.UseVisualStyleBackColor = true;
+            this.button_SecureCRT.Click += new System.EventHandler(this.button_SecureCRT_Click);
+            // 
             // button_WinCacheGrind
             // 
             this.button_WinCacheGrind.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_WinCacheGrind.Location = new System.Drawing.Point(6, 101);
+            this.button_WinCacheGrind.Location = new System.Drawing.Point(5, 101);
             this.button_WinCacheGrind.Name = "button_WinCacheGrind";
-            this.button_WinCacheGrind.Size = new System.Drawing.Size(86, 23);
+            this.button_WinCacheGrind.Size = new System.Drawing.Size(77, 23);
             this.button_WinCacheGrind.TabIndex = 14;
             this.button_WinCacheGrind.Text = "CacheGrind";
             this.button_WinCacheGrind.UseVisualStyleBackColor = true;
@@ -356,9 +382,9 @@
             // button_VIM
             // 
             this.button_VIM.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_VIM.Location = new System.Drawing.Point(99, 75);
+            this.button_VIM.Location = new System.Drawing.Point(145, 19);
             this.button_VIM.Name = "button_VIM";
-            this.button_VIM.Size = new System.Drawing.Size(87, 23);
+            this.button_VIM.Size = new System.Drawing.Size(70, 23);
             this.button_VIM.TabIndex = 13;
             this.button_VIM.Text = "VIM";
             this.button_VIM.UseVisualStyleBackColor = true;
@@ -387,9 +413,9 @@
             this.groupBox_usually.Controls.Add(this.button_author);
             this.groupBox_usually.Controls.Add(this.button_MySQL);
             this.groupBox_usually.Controls.Add(this.button_mod_host);
-            this.groupBox_usually.Location = new System.Drawing.Point(204, 13);
+            this.groupBox_usually.Location = new System.Drawing.Point(199, 13);
             this.groupBox_usually.Name = "groupBox_usually";
-            this.groupBox_usually.Size = new System.Drawing.Size(116, 134);
+            this.groupBox_usually.Size = new System.Drawing.Size(114, 134);
             this.groupBox_usually.TabIndex = 12;
             this.groupBox_usually.TabStop = false;
             this.groupBox_usually.Text = "常用";
@@ -434,7 +460,7 @@
             this.listBox_listen.ItemHeight = 12;
             this.listBox_listen.Items.AddRange(new object[] {
             "init"});
-            this.listBox_listen.Location = new System.Drawing.Point(6, 18);
+            this.listBox_listen.Location = new System.Drawing.Point(6, 15);
             this.listBox_listen.Name = "listBox_listen";
             this.listBox_listen.Size = new System.Drawing.Size(515, 100);
             this.listBox_listen.TabIndex = 1;
@@ -442,7 +468,7 @@
             // groupBox_status
             // 
             this.groupBox_status.Controls.Add(this.listBox_listen);
-            this.groupBox_status.Location = new System.Drawing.Point(7, 153);
+            this.groupBox_status.Location = new System.Drawing.Point(7, 148);
             this.groupBox_status.Name = "groupBox_status";
             this.groupBox_status.Size = new System.Drawing.Size(527, 129);
             this.groupBox_status.TabIndex = 15;
@@ -487,7 +513,7 @@
             this.groupBox_webserver.Controls.Add(this.radioButton_Apache);
             this.groupBox_webserver.Location = new System.Drawing.Point(7, 12);
             this.groupBox_webserver.Name = "groupBox_webserver";
-            this.groupBox_webserver.Size = new System.Drawing.Size(95, 61);
+            this.groupBox_webserver.Size = new System.Drawing.Size(91, 61);
             this.groupBox_webserver.TabIndex = 0;
             this.groupBox_webserver.TabStop = false;
             this.groupBox_webserver.Text = "WebServer";
@@ -498,7 +524,7 @@
             this.groupBox_MDservice.Controls.Add(this.checkBox_Min);
             this.groupBox_MDservice.Location = new System.Drawing.Point(7, 79);
             this.groupBox_MDservice.Name = "groupBox_MDservice";
-            this.groupBox_MDservice.Size = new System.Drawing.Size(95, 68);
+            this.groupBox_MDservice.Size = new System.Drawing.Size(91, 68);
             this.groupBox_MDservice.TabIndex = 18;
             this.groupBox_MDservice.TabStop = false;
             this.groupBox_MDservice.Text = "MDservice";
@@ -732,7 +758,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(636, 305);
+            this.ClientSize = new System.Drawing.Size(636, 300);
             this.Controls.Add(this.groupBox_status);
             this.Controls.Add(this.groupBox_MDservice);
             this.Controls.Add(this.groupBox_manage);
@@ -840,6 +866,8 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_open;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_close;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_exit;
+        private System.Windows.Forms.Button button_SecureCRT;
+        private System.Windows.Forms.Button button_HeidiSQL;
     }
 }
 
