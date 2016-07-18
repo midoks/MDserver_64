@@ -5,7 +5,7 @@
 
 ###相关链接
 - 安装文件:[mdserver(百度盘)](http://pan.baidu.com/s/1qW3Gwos)
-- 使用教程:[mdserver](http://midoks.github.io/2015/02/24/mdserver-mac.html)
+- 安装文件地址:[v3.5](http://pan.baidu.com/s/1qYs1rY0)
 
 ### 截图
-[![screen_1.png](/images/screen_1.png)](/images/screen_1.png)
+[![截图](/images/screen_1.png)](/images/screen_1.jpg)
