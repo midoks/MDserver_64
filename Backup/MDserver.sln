@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDserver", "MDserver\MDserver.csproj", "{4FF7268F-0E37-4D32-88E6-7D63BFAC9942}"
 EndProject
 Global

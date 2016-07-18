@@ -41,10 +41,6 @@
             this.button_stop = new System.Windows.Forms.Button();
             this.radioButton_MySQL = new System.Windows.Forms.RadioButton();
             this.groupBox_sql = new System.Windows.Forms.GroupBox();
-            this.button_mongo_admin = new System.Windows.Forms.Button();
-            this.button_redis_admin = new System.Windows.Forms.Button();
-            this.button_memcached_admin = new System.Windows.Forms.Button();
-            this.button_MySQL = new System.Windows.Forms.Button();
             this.checkBox_MongoDB = new System.Windows.Forms.CheckBox();
             this.checkBox_Redis = new System.Windows.Forms.CheckBox();
             this.checkBox_memcached = new System.Windows.Forms.CheckBox();
@@ -55,8 +51,6 @@
             this.button_Rythem = new System.Windows.Forms.Button();
             this.button_shell = new System.Windows.Forms.Button();
             this.groupBox_tool = new System.Windows.Forms.GroupBox();
-            this.button_make_link = new System.Windows.Forms.Button();
-            this.button_FSCapture = new System.Windows.Forms.Button();
             this.button_HeidiSQL = new System.Windows.Forms.Button();
             this.button_SecureCRT = new System.Windows.Forms.Button();
             this.button_WinCacheGrind = new System.Windows.Forms.Button();
@@ -65,10 +59,12 @@
             this.groupBox_usually = new System.Windows.Forms.GroupBox();
             this.button_OP_lweb = new System.Windows.Forms.Button();
             this.button_author = new System.Windows.Forms.Button();
+            this.button_MySQL = new System.Windows.Forms.Button();
             this.listBox_listen = new System.Windows.Forms.ListBox();
             this.groupBox_status = new System.Windows.Forms.GroupBox();
             this.button_start = new System.Windows.Forms.Button();
             this.radioButton_Apache = new System.Windows.Forms.RadioButton();
+            this.radioButton_Nginx = new System.Windows.Forms.RadioButton();
             this.groupBox_webserver = new System.Windows.Forms.GroupBox();
             this.serviceController_main = new System.ServiceProcess.ServiceController();
             this.groupBox_MDservice = new System.Windows.Forms.GroupBox();
@@ -80,13 +76,15 @@
             this.menuItem_a_conf = new System.Windows.Forms.MenuItem();
             this.menuItem_a_log = new System.Windows.Forms.MenuItem();
             this.menuItem_a_error = new System.Windows.Forms.MenuItem();
-            this.menuItem_apache_vhost = new System.Windows.Forms.MenuItem();
+            this.menuItem_nginx = new System.Windows.Forms.MenuItem();
+            this.menuItem_n_conf = new System.Windows.Forms.MenuItem();
+            this.menuItem_n_record = new System.Windows.Forms.MenuItem();
+            this.menuItem_n_error = new System.Windows.Forms.MenuItem();
             this.menuItem_SQL = new System.Windows.Forms.MenuItem();
             this.menuItem_SQL_m = new System.Windows.Forms.MenuItem();
             this.menuItem_msql_conf = new System.Windows.Forms.MenuItem();
             this.menuItem_php = new System.Windows.Forms.MenuItem();
             this.menuItem_php_conf = new System.Windows.Forms.MenuItem();
-            this.menuItem_PHPext = new System.Windows.Forms.MenuItem();
             this.menuItem_webOP = new System.Windows.Forms.MenuItem();
             this.menuItem_op_www = new System.Windows.Forms.MenuItem();
             this.menuItem_cgi_bin = new System.Windows.Forms.MenuItem();
@@ -216,64 +214,16 @@
             // 
             // groupBox_sql
             // 
-            this.groupBox_sql.Controls.Add(this.button_mongo_admin);
-            this.groupBox_sql.Controls.Add(this.button_redis_admin);
-            this.groupBox_sql.Controls.Add(this.button_memcached_admin);
-            this.groupBox_sql.Controls.Add(this.button_MySQL);
             this.groupBox_sql.Controls.Add(this.checkBox_MongoDB);
             this.groupBox_sql.Controls.Add(this.radioButton_MySQL);
             this.groupBox_sql.Controls.Add(this.checkBox_Redis);
             this.groupBox_sql.Controls.Add(this.checkBox_memcached);
             this.groupBox_sql.Location = new System.Drawing.Point(99, 12);
             this.groupBox_sql.Name = "groupBox_sql";
-            this.groupBox_sql.Size = new System.Drawing.Size(118, 135);
+            this.groupBox_sql.Size = new System.Drawing.Size(100, 135);
             this.groupBox_sql.TabIndex = 8;
             this.groupBox_sql.TabStop = false;
             this.groupBox_sql.Text = "SQL and NoSQL";
-            // 
-            // button_mongo_admin
-            // 
-            this.button_mongo_admin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_mongo_admin.Image = ((System.Drawing.Image)(resources.GetObject("button_mongo_admin.Image")));
-            this.button_mongo_admin.Location = new System.Drawing.Point(91, 104);
-            this.button_mongo_admin.Name = "button_mongo_admin";
-            this.button_mongo_admin.Size = new System.Drawing.Size(23, 23);
-            this.button_mongo_admin.TabIndex = 6;
-            this.button_mongo_admin.UseVisualStyleBackColor = true;
-            this.button_mongo_admin.Click += new System.EventHandler(this.button_mongo_admin_Click);
-            // 
-            // button_redis_admin
-            // 
-            this.button_redis_admin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_redis_admin.Image = ((System.Drawing.Image)(resources.GetObject("button_redis_admin.Image")));
-            this.button_redis_admin.Location = new System.Drawing.Point(91, 76);
-            this.button_redis_admin.Name = "button_redis_admin";
-            this.button_redis_admin.Size = new System.Drawing.Size(23, 23);
-            this.button_redis_admin.TabIndex = 5;
-            this.button_redis_admin.UseVisualStyleBackColor = true;
-            this.button_redis_admin.Click += new System.EventHandler(this.button_redis_admin_Click);
-            // 
-            // button_memcached_admin
-            // 
-            this.button_memcached_admin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_memcached_admin.Image = ((System.Drawing.Image)(resources.GetObject("button_memcached_admin.Image")));
-            this.button_memcached_admin.Location = new System.Drawing.Point(91, 48);
-            this.button_memcached_admin.Name = "button_memcached_admin";
-            this.button_memcached_admin.Size = new System.Drawing.Size(23, 23);
-            this.button_memcached_admin.TabIndex = 4;
-            this.button_memcached_admin.UseVisualStyleBackColor = true;
-            this.button_memcached_admin.Click += new System.EventHandler(this.button_memcached_admin_Click);
-            // 
-            // button_MySQL
-            // 
-            this.button_MySQL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_MySQL.Image = ((System.Drawing.Image)(resources.GetObject("button_MySQL.Image")));
-            this.button_MySQL.Location = new System.Drawing.Point(91, 18);
-            this.button_MySQL.Name = "button_MySQL";
-            this.button_MySQL.Size = new System.Drawing.Size(23, 23);
-            this.button_MySQL.TabIndex = 3;
-            this.button_MySQL.UseVisualStyleBackColor = true;
-            this.button_MySQL.Click += new System.EventHandler(this.button_MySQL_Click);
             // 
             // checkBox_MongoDB
             // 
@@ -379,8 +329,6 @@
             // 
             // groupBox_tool
             // 
-            this.groupBox_tool.Controls.Add(this.button_make_link);
-            this.groupBox_tool.Controls.Add(this.button_FSCapture);
             this.groupBox_tool.Controls.Add(this.button_HeidiSQL);
             this.groupBox_tool.Controls.Add(this.button_SecureCRT);
             this.groupBox_tool.Controls.Add(this.button_WinCacheGrind);
@@ -397,30 +345,6 @@
             this.groupBox_tool.TabIndex = 10;
             this.groupBox_tool.TabStop = false;
             this.groupBox_tool.Text = "小工具";
-            // 
-            // button_make_link
-            // 
-            this.button_make_link.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.button_make_link.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_make_link.Font = new System.Drawing.Font("宋体", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button_make_link.Location = new System.Drawing.Point(145, 101);
-            this.button_make_link.Name = "button_make_link";
-            this.button_make_link.Size = new System.Drawing.Size(70, 23);
-            this.button_make_link.TabIndex = 18;
-            this.button_make_link.Text = "生成快捷键";
-            this.button_make_link.UseVisualStyleBackColor = true;
-            this.button_make_link.Click += new System.EventHandler(this.button_make_link_Click);
-            // 
-            // button_FSCapture
-            // 
-            this.button_FSCapture.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_FSCapture.Location = new System.Drawing.Point(145, 73);
-            this.button_FSCapture.Name = "button_FSCapture";
-            this.button_FSCapture.Size = new System.Drawing.Size(70, 23);
-            this.button_FSCapture.TabIndex = 17;
-            this.button_FSCapture.Text = "FSCapture";
-            this.button_FSCapture.UseVisualStyleBackColor = true;
-            this.button_FSCapture.Click += new System.EventHandler(this.button_FSCapture_Click);
             // 
             // button_HeidiSQL
             // 
@@ -475,11 +399,11 @@
             this.button_mod_host.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.button_mod_host.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_mod_host.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button_mod_host.Location = new System.Drawing.Point(12, 18);
+            this.button_mod_host.Location = new System.Drawing.Point(8, 18);
             this.button_mod_host.Name = "button_mod_host";
-            this.button_mod_host.Size = new System.Drawing.Size(66, 23);
+            this.button_mod_host.Size = new System.Drawing.Size(99, 23);
             this.button_mod_host.TabIndex = 5;
-            this.button_mod_host.Text = "HOST文件";
+            this.button_mod_host.Text = "修改HOST文件";
             this.button_mod_host.UseVisualStyleBackColor = true;
             this.button_mod_host.Click += new System.EventHandler(this.button_mod_host_Click);
             // 
@@ -487,10 +411,11 @@
             // 
             this.groupBox_usually.Controls.Add(this.button_OP_lweb);
             this.groupBox_usually.Controls.Add(this.button_author);
+            this.groupBox_usually.Controls.Add(this.button_MySQL);
             this.groupBox_usually.Controls.Add(this.button_mod_host);
-            this.groupBox_usually.Location = new System.Drawing.Point(223, 13);
+            this.groupBox_usually.Location = new System.Drawing.Point(199, 13);
             this.groupBox_usually.Name = "groupBox_usually";
-            this.groupBox_usually.Size = new System.Drawing.Size(90, 134);
+            this.groupBox_usually.Size = new System.Drawing.Size(114, 134);
             this.groupBox_usually.TabIndex = 12;
             this.groupBox_usually.TabStop = false;
             this.groupBox_usually.Text = "常用";
@@ -498,25 +423,36 @@
             // button_OP_lweb
             // 
             this.button_OP_lweb.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_OP_lweb.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button_OP_lweb.Location = new System.Drawing.Point(12, 75);
+            this.button_OP_lweb.Location = new System.Drawing.Point(8, 100);
             this.button_OP_lweb.Name = "button_OP_lweb";
-            this.button_OP_lweb.Size = new System.Drawing.Size(66, 22);
+            this.button_OP_lweb.Size = new System.Drawing.Size(99, 23);
             this.button_OP_lweb.TabIndex = 8;
-            this.button_OP_lweb.Text = "打开本地";
+            this.button_OP_lweb.Text = "打开本地地址";
             this.button_OP_lweb.UseVisualStyleBackColor = true;
             this.button_OP_lweb.Click += new System.EventHandler(this.button_OP_lweb_Click);
             // 
             // button_author
             // 
             this.button_author.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_author.Location = new System.Drawing.Point(12, 46);
+            this.button_author.Location = new System.Drawing.Point(8, 74);
             this.button_author.Name = "button_author";
-            this.button_author.Size = new System.Drawing.Size(66, 22);
+            this.button_author.Size = new System.Drawing.Size(99, 23);
             this.button_author.TabIndex = 7;
             this.button_author.Text = "作者博客";
             this.button_author.UseVisualStyleBackColor = true;
             this.button_author.Click += new System.EventHandler(this.button_author_Click);
+            // 
+            // button_MySQL
+            // 
+            this.button_MySQL.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button_MySQL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_MySQL.Location = new System.Drawing.Point(8, 46);
+            this.button_MySQL.Name = "button_MySQL";
+            this.button_MySQL.Size = new System.Drawing.Size(99, 23);
+            this.button_MySQL.TabIndex = 6;
+            this.button_MySQL.Text = "管理MySQL数据库";
+            this.button_MySQL.UseVisualStyleBackColor = true;
+            this.button_MySQL.Click += new System.EventHandler(this.button_MySQL_Click);
             // 
             // listBox_listen
             // 
@@ -553,7 +489,7 @@
             // 
             this.radioButton_Apache.AutoSize = true;
             this.radioButton_Apache.Checked = true;
-            this.radioButton_Apache.Location = new System.Drawing.Point(7, 19);
+            this.radioButton_Apache.Location = new System.Drawing.Point(8, 19);
             this.radioButton_Apache.Name = "radioButton_Apache";
             this.radioButton_Apache.Size = new System.Drawing.Size(59, 16);
             this.radioButton_Apache.TabIndex = 0;
@@ -561,8 +497,19 @@
             this.radioButton_Apache.Text = "Apache";
             this.radioButton_Apache.UseVisualStyleBackColor = true;
             // 
+            // radioButton_Nginx
+            // 
+            this.radioButton_Nginx.AutoSize = true;
+            this.radioButton_Nginx.Location = new System.Drawing.Point(8, 40);
+            this.radioButton_Nginx.Name = "radioButton_Nginx";
+            this.radioButton_Nginx.Size = new System.Drawing.Size(53, 16);
+            this.radioButton_Nginx.TabIndex = 1;
+            this.radioButton_Nginx.Text = "Nginx";
+            this.radioButton_Nginx.UseVisualStyleBackColor = true;
+            // 
             // groupBox_webserver
             // 
+            this.groupBox_webserver.Controls.Add(this.radioButton_Nginx);
             this.groupBox_webserver.Controls.Add(this.radioButton_Apache);
             this.groupBox_webserver.Location = new System.Drawing.Point(7, 12);
             this.groupBox_webserver.Name = "groupBox_webserver";
@@ -617,7 +564,8 @@
             // 
             this.menuItem_webserver.Index = 0;
             this.menuItem_webserver.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem_apache});
+            this.menuItem_apache,
+            this.menuItem_nginx});
             this.menuItem_webserver.Text = "服务器";
             // 
             // menuItem_apache
@@ -626,10 +574,8 @@
             this.menuItem_apache.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem_a_conf,
             this.menuItem_a_log,
-            this.menuItem_a_error,
-            this.menuItem_apache_vhost});
+            this.menuItem_a_error});
             this.menuItem_apache.Text = "Apache";
-            this.menuItem_apache.Click += new System.EventHandler(this.menuItem_apache_Click);
             // 
             // menuItem_a_conf
             // 
@@ -649,11 +595,32 @@
             this.menuItem_a_error.Text = "错误日志";
             this.menuItem_a_error.Click += new System.EventHandler(this.menuItem_a_error_Click);
             // 
-            // menuItem_apache_vhost
+            // menuItem_nginx
             // 
-            this.menuItem_apache_vhost.Index = 3;
-            this.menuItem_apache_vhost.Text = "虚拟目录";
-            this.menuItem_apache_vhost.Click += new System.EventHandler(this.menuItem_apache_vhost_Click);
+            this.menuItem_nginx.Index = 1;
+            this.menuItem_nginx.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem_n_conf,
+            this.menuItem_n_record,
+            this.menuItem_n_error});
+            this.menuItem_nginx.Text = "Nginx";
+            // 
+            // menuItem_n_conf
+            // 
+            this.menuItem_n_conf.Index = 0;
+            this.menuItem_n_conf.Text = "配置文件";
+            this.menuItem_n_conf.Click += new System.EventHandler(this.menuItem_n_conf_Click);
+            // 
+            // menuItem_n_record
+            // 
+            this.menuItem_n_record.Index = 1;
+            this.menuItem_n_record.Text = "日志记录";
+            this.menuItem_n_record.Click += new System.EventHandler(this.menuItem_n_record_Click);
+            // 
+            // menuItem_n_error
+            // 
+            this.menuItem_n_error.Index = 2;
+            this.menuItem_n_error.Text = "错误日志";
+            this.menuItem_n_error.Click += new System.EventHandler(this.menuItem_n_error_Click);
             // 
             // menuItem_SQL
             // 
@@ -679,8 +646,7 @@
             // 
             this.menuItem_php.Index = 2;
             this.menuItem_php.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem_php_conf,
-            this.menuItem_PHPext});
+            this.menuItem_php_conf});
             this.menuItem_php.Text = "PHP设置";
             // 
             // menuItem_php_conf
@@ -688,12 +654,6 @@
             this.menuItem_php_conf.Index = 0;
             this.menuItem_php_conf.Text = "配置文件";
             this.menuItem_php_conf.Click += new System.EventHandler(this.menuItem_php_conf_Click);
-            // 
-            // menuItem_PHPext
-            // 
-            this.menuItem_PHPext.Index = 1;
-            this.menuItem_PHPext.Text = "扩展";
-            this.menuItem_PHPext.Click += new System.EventHandler(this.menuItem_PHPext_Click);
             // 
             // menuItem_webOP
             // 
@@ -865,9 +825,11 @@
         private System.Windows.Forms.GroupBox groupBox_status;
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.RadioButton radioButton_Apache;
+        private System.Windows.Forms.RadioButton radioButton_Nginx;
         private System.Windows.Forms.GroupBox groupBox_webserver;
         private System.Windows.Forms.Button button_regedit;
         private System.ServiceProcess.ServiceController serviceController_main;
+        private System.Windows.Forms.Button button_MySQL;
         private System.Windows.Forms.Button button_author;
         private System.Windows.Forms.Button button_VIM;
         private System.Windows.Forms.GroupBox groupBox_MDservice;
@@ -877,6 +839,8 @@
         private System.Windows.Forms.MenuItem menuItem_webserver;
         private System.Windows.Forms.MenuItem menuItem_apache;
         private System.Windows.Forms.MenuItem menuItem_a_conf;
+        private System.Windows.Forms.MenuItem menuItem_nginx;
+        private System.Windows.Forms.MenuItem menuItem_n_conf;
         private System.Windows.Forms.MenuItem menuItem_SQL;
         private System.Windows.Forms.MenuItem menuItem_SQL_m;
         private System.Windows.Forms.MenuItem menuItem_php;
@@ -888,6 +852,8 @@
         private System.Windows.Forms.Button button_OP_lweb;
         private System.Windows.Forms.MenuItem menuItem_a_log;
         private System.Windows.Forms.MenuItem menuItem_a_error;
+        private System.Windows.Forms.MenuItem menuItem_n_record;
+        private System.Windows.Forms.MenuItem menuItem_n_error;
         private System.Windows.Forms.MenuItem menuItem_msql_conf;
         private System.Windows.Forms.MenuItem menuItem_php_conf;
         private System.Windows.Forms.MenuItem menuItem_cgi_bin;
@@ -902,14 +868,6 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_exit;
         private System.Windows.Forms.Button button_SecureCRT;
         private System.Windows.Forms.Button button_HeidiSQL;
-        private System.Windows.Forms.Button button_FSCapture;
-        private System.Windows.Forms.MenuItem menuItem_PHPext;
-        private System.Windows.Forms.MenuItem menuItem_apache_vhost;
-        private System.Windows.Forms.Button button_make_link;
-        private System.Windows.Forms.Button button_MySQL;
-        private System.Windows.Forms.Button button_memcached_admin;
-        private System.Windows.Forms.Button button_mongo_admin;
-        private System.Windows.Forms.Button button_redis_admin;
     }
 }
 

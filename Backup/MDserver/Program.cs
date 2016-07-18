@@ -15,12 +15,9 @@ namespace MDserver
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            superMain();
-            //Application.Run(new MDserv());
-        }
 
-        static void superMain() {
-          
+
+
             /**
              * 当前用户是管理员的时候，直接启动应用程序
              * 如果不是管理员，则使用启动对象启动程序，以确保使用管理员身份运行
@@ -54,6 +51,7 @@ namespace MDserver
                 //退出
                 Application.Exit();
             }
+            //Application.Run(new MDserv());
         }
     }
 }

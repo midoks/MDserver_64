@@ -1,44 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="微软雅黑" Size="9" />
   <Class Name="MDserver.AboutForm" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="2.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>AboutForm.cs</FileName>
+      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAAAAAAAAAAAABAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MDserver.MDserv" Collapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+    <Position X="4" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAxp5vWX1m7iRhqTC0fTaPkXD8bjjzlS6aEWVG56Btw=</HashCode>
       <FileName>Form_MDserver.cs</FileName>
+      <HashCode>AE1p7vyX1mvqBhiTCkfb6PkXD8bjrzFSbKEWVG56Btw=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MDserver.Program" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MDserver.SystemINI" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+    <Position X="5.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgACBAQAAABAAAAQAgMgAAQAAACAEQAAACAAAABAAAA=</HashCode>
       <FileName>SystemINI.cs</FileName>
+      <HashCode>AgACBAQAAABAAAAQAgMgAAQAAACAEQAAACAAAABAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MDserver.Properties.Resources" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+    <Position X="2.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MDserver.Properties.Settings" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
+    <Position X="4" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Font Name="微软雅黑" Size="9" />
 </ClassDiagram>

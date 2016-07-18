@@ -120,47 +120,6 @@
   <metadata name="statusStrip_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button_mongo_admin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADrSURBVDhPrVLBDcIwDMwIjJBHkvLso+ELI3SEbgAbwAjdAEZgAzoCozACd6lTEZSWINWSpbN7
-        d26cqFXCWl9X1vfO7S4lSS41IlfKWX8TWByJBo4DG7lp2QSXGpGLAT5ImQ1jmgOEL2Jyiwy0rjdM4so0
-        J3Ba4kWDRIRliZC/3hrj9+wvGlAQRTTa6lpz4+Hc6JMza0AByB3qo1ztEIn8zj1EnDUgDrchV8Te1P9p
-        MF7jGfjBzGFwrsThOJ8GceI/kWimJcGViSlP5mwNbvKUvwOkntuXUhGzJ+VyYFKLvCPT5zv2wkNaMZR6
-        A50OhnWWxlonAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="button_redis_admin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADrSURBVDhPrVLBDcIwDMwIjJBHkvLso+ELI3SEbgAbwAjdAEZgAzoCozACd6lTEZSWINWSpbN7
-        d26cqFXCWl9X1vfO7S4lSS41IlfKWX8TWByJBo4DG7lp2QSXGpGLAT5ImQ1jmgOEL2Jyiwy0rjdM4so0
-        J3Ba4kWDRIRliZC/3hrj9+wvGlAQRTTa6lpz4+Hc6JMza0AByB3qo1ztEIn8zj1EnDUgDrchV8Te1P9p
-        MF7jGfjBzGFwrsThOJ8GceI/kWimJcGViSlP5mwNbvKUvwOkntuXUhGzJ+VyYFKLvCPT5zv2wkNaMZR6
-        A50OhnWWxlonAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="button_memcached_admin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADrSURBVDhPrVLBDcIwDMwIjJBHkvLso+ELI3SEbgAbwAjdAEZgAzoCozACd6lTEZSWINWSpbN7
-        d26cqFXCWl9X1vfO7S4lSS41IlfKWX8TWByJBo4DG7lp2QSXGpGLAT5ImQ1jmgOEL2Jyiwy0rjdM4so0
-        J3Ba4kWDRIRliZC/3hrj9+wvGlAQRTTa6lpz4+Hc6JMza0AByB3qo1ztEIn8zj1EnDUgDrchV8Te1P9p
-        MF7jGfjBzGFwrsThOJ8GceI/kWimJcGViSlP5mwNbvKUvwOkntuXUhGzJ+VyYFKLvCPT5zv2wkNaMZR6
-        A50OhnWWxlonAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="button_MySQL.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADrSURBVDhPrVLBDcIwDMwIjJBHkvLso+ELI3SEbgAbwAjdAEZgAzoCozACd6lTEZSWINWSpbN7
-        d26cqFXCWl9X1vfO7S4lSS41IlfKWX8TWByJBo4DG7lp2QSXGpGLAT5ImQ1jmgOEL2Jyiwy0rjdM4so0
-        J3Ba4kWDRIRliZC/3hrj9+wvGlAQRTTa6lpz4+Hc6JMza0AByB3qo1ztEIn8zj1EnDUgDrchV8Te1P9p
-        MF7jGfjBzGFwrsThOJ8GceI/kWimJcGViSlP5mwNbvKUvwOkntuXUhGzJ+VyYFKLvCPT5zv2wkNaMZR6
-        A50OhnWWxlonAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="serviceController_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>166, 17</value>
   </metadata>
@@ -173,6 +132,7 @@
   <metadata name="contextMenuStrip_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="notifyIcon_main.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAMDAAAAAAAACoHAAAFgAAACgAAAAwAAAAYAAAAAEAGAAAAAAAgBwAAAAAAAAAAAAAAAAAAAAA
@@ -300,9 +260,6 @@
         AAAH/wAA//AAAA//AAD//gAAf/8AAP//AAD//wAA///wD///AAA=
 </value>
   </data>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAMDAAAAAAAACoHAAAFgAAACgAAAAwAAAAYAAAAAEAGAAAAAAAgBwAAAAAAAAAAAAAAAAAAAAA

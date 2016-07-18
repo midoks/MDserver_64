@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("MDserver")]
-[assembly: AssemblyDescription("MDserver")]
+[assembly: AssemblyTitle("WindowsApplication3")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("china")]
-[assembly: AssemblyProduct("MDserver")]
-[assembly: AssemblyCopyright("midoks 版权所有 (C) china 2014")]
+[assembly: AssemblyProduct("WindowsApplication3")]
+[assembly: AssemblyCopyright("版权所有 (C) china 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
