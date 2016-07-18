@@ -8,4 +8,4 @@
 - 安装文件地址:[v3.5](http://pan.baidu.com/s/1qYs1rY0)
 
 ### 截图
-[![截图](/images/screen_1.png)](/images/screen_1.jpg)
+[![截图](/images/screen_1.jpg)](/images/screen_1.jpg)
