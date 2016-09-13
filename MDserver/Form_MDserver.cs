@@ -200,7 +200,7 @@ namespace MDserver
                             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_mysql_lazy);
                             timer.Enabled = true;
                             timer.AutoReset = false;
-                        }
+                       } 
                     }
                 }
 
@@ -231,6 +231,12 @@ namespace MDserver
             {
                 checkBox_Redis.Checked = true;
             }
+
+            //MD_MySQL
+            if (WQueryServiceIsStart(MD_MySQL)) {
+                checkBox_MySQL.Checked = true;
+            }
+
             //main server
             _check_ws_status();
         }
@@ -243,9 +249,6 @@ namespace MDserver
             {
                 radioButton_Apache.Checked = true;
             }
-
-            radioButton_MySQL.Checked = true;
-
 
             //跟随系统检测
             if (runWhenStartExist("MDserver"))
@@ -531,6 +534,36 @@ namespace MDserver
                 }
             }
             return str;
+        }
+
+        private void checkBox_MySQL_CheckedChanged(object sender, EventArgs e)
+        {
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(_mysql_status);
+            timer.Enabled = true;
+            timer.AutoReset = false;
+        }
+
+        private void _mysql_status(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (WQueryServiceIsStart(MD_MySQL) && checkBox_MySQL.Checked)
+            {
+                return;
+            }
+            try
+            {
+                if (checkBox_MySQL.Checked)
+                {
+                    _start_mysql();
+                } else {
+                    _stop_mysql();
+                }
+            }
+            catch (Exception ex)
+            {
+                Wstatus("MySQL: " + ex.Message);
+            }
+
         }
 
         //memcached 启动
@@ -824,7 +857,6 @@ namespace MDserver
             Wstatus("正在启动中...");
             pre_start_SERVICE();
             _start_webserver();
-            _start_mysql();
 
             this.button_start.Enabled = false;
             this.ini.WriteInteger("MDSERVER", "MD_RUN", 1);
@@ -883,7 +915,7 @@ namespace MDserver
             Wcmd("net start " + MD_MySQL);
 
             //延迟执行
-            System.Timers.Timer timer = new System.Timers.Timer(5000);
+            System.Timers.Timer timer = new System.Timers.Timer(2000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_mysql_lazy);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -893,11 +925,11 @@ namespace MDserver
         {
             if (WQueryServiceIsStart(MD_MySQL))
             {
-                Wstatus_add("," + MD_MySQL + "启动成功!!!");
+                Wstatus(MD_MySQL + "启动成功!!!");
             }
             else
             {
-                Wstatus_add("," + MD_MySQL + "启动失败!!!");
+                Wstatus(MD_MySQL + "启动失败!!!");
             }
         }
 
@@ -906,7 +938,6 @@ namespace MDserver
         {
            
             _stop_webserver();
-            _stop_mysql();
             after_stop_SERVICE();
             this.button_start.Enabled = true;
 
@@ -950,11 +981,11 @@ namespace MDserver
         {
             if (!WServiceIsExisted(MD_ApacheName) || !WQueryServiceIsStart(MD_ApacheName))
             {
-                Wstatus_add("," + MD_ApacheName + "停止成功!!!");
+                Wstatus(MD_ApacheName + "停止成功!!!");
             }
             else
             {
-                Wstatus_add("," + MD_ApacheName + "停止失败!!!");
+                Wstatus(MD_ApacheName + "停止失败!!!");
             }
         }
 
@@ -993,6 +1024,7 @@ namespace MDserver
             }
         }
 
+       
 
         /**
          *  小工具配置
@@ -1662,9 +1694,5 @@ namespace MDserver
         {}
 
        
-
-
-       
-
     }
 }

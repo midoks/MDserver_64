@@ -39,7 +39,6 @@
             this.groupBox_manage = new System.Windows.Forms.GroupBox();
             this.button_regedit = new System.Windows.Forms.Button();
             this.button_stop = new System.Windows.Forms.Button();
-            this.radioButton_MySQL = new System.Windows.Forms.RadioButton();
             this.groupBox_sql = new System.Windows.Forms.GroupBox();
             this.button_mongo_admin = new System.Windows.Forms.Button();
             this.button_redis_admin = new System.Windows.Forms.Button();
@@ -101,6 +100,7 @@
             this.ToolStripMenuItem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_close = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox_MySQL = new System.Windows.Forms.CheckBox();
             this.statusStrip_main.SuspendLayout();
             this.groupBox_manage.SuspendLayout();
             this.groupBox_sql.SuspendLayout();
@@ -202,26 +202,14 @@
             this.button_stop.UseVisualStyleBackColor = true;
             this.button_stop.Click += new System.EventHandler(this.button_stop_Click);
             // 
-            // radioButton_MySQL
-            // 
-            this.radioButton_MySQL.AutoSize = true;
-            this.radioButton_MySQL.Checked = true;
-            this.radioButton_MySQL.Location = new System.Drawing.Point(16, 22);
-            this.radioButton_MySQL.Name = "radioButton_MySQL";
-            this.radioButton_MySQL.Size = new System.Drawing.Size(53, 16);
-            this.radioButton_MySQL.TabIndex = 0;
-            this.radioButton_MySQL.TabStop = true;
-            this.radioButton_MySQL.Text = "MySQL";
-            this.radioButton_MySQL.UseVisualStyleBackColor = true;
-            // 
             // groupBox_sql
             // 
+            this.groupBox_sql.Controls.Add(this.checkBox_MySQL);
             this.groupBox_sql.Controls.Add(this.button_mongo_admin);
             this.groupBox_sql.Controls.Add(this.button_redis_admin);
             this.groupBox_sql.Controls.Add(this.button_memcached_admin);
             this.groupBox_sql.Controls.Add(this.button_MySQL);
             this.groupBox_sql.Controls.Add(this.checkBox_MongoDB);
-            this.groupBox_sql.Controls.Add(this.radioButton_MySQL);
             this.groupBox_sql.Controls.Add(this.checkBox_Redis);
             this.groupBox_sql.Controls.Add(this.checkBox_memcached);
             this.groupBox_sql.Location = new System.Drawing.Point(99, 12);
@@ -793,6 +781,17 @@
             this.ToolStripMenuItem_exit.Text = "退出MDserver程序";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
             // 
+            // checkBox_MySQL
+            // 
+            this.checkBox_MySQL.AutoSize = true;
+            this.checkBox_MySQL.Location = new System.Drawing.Point(16, 22);
+            this.checkBox_MySQL.Name = "checkBox_MySQL";
+            this.checkBox_MySQL.Size = new System.Drawing.Size(54, 16);
+            this.checkBox_MySQL.TabIndex = 7;
+            this.checkBox_MySQL.Text = "MySQL";
+            this.checkBox_MySQL.UseVisualStyleBackColor = true;
+            this.checkBox_MySQL.CheckedChanged += new System.EventHandler(this.checkBox_MySQL_CheckedChanged);
+            // 
             // MDserv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -847,7 +846,6 @@
         private System.Windows.Forms.Button button_listen;
         private System.Windows.Forms.GroupBox groupBox_manage;
         private System.Windows.Forms.Button button_stop;
-        private System.Windows.Forms.RadioButton radioButton_MySQL;
         private System.Windows.Forms.GroupBox groupBox_sql;
         private System.Windows.Forms.CheckBox checkBox_memcached;
         private System.Windows.Forms.CheckBox checkBox_Redis;
@@ -910,6 +908,7 @@
         private System.Windows.Forms.Button button_memcached_admin;
         private System.Windows.Forms.Button button_mongo_admin;
         private System.Windows.Forms.Button button_redis_admin;
+        private System.Windows.Forms.CheckBox checkBox_MySQL;
     }
 }
 
