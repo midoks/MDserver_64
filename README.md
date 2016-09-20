@@ -10,5 +10,5 @@
 ### 截图
 [![截图](/images/screen_1.jpg)](/images/screen_1.jpg)
 
--- 新增php多版本支持
+- 新增php多版本支持
 [![截图](/images/screen_2.jpg)](/images/screen_2.jpg)
