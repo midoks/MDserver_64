@@ -40,6 +40,7 @@
             this.button_regedit = new System.Windows.Forms.Button();
             this.button_stop = new System.Windows.Forms.Button();
             this.groupBox_sql = new System.Windows.Forms.GroupBox();
+            this.checkBox_MySQL = new System.Windows.Forms.CheckBox();
             this.button_mongo_admin = new System.Windows.Forms.Button();
             this.button_redis_admin = new System.Windows.Forms.Button();
             this.button_memcached_admin = new System.Windows.Forms.Button();
@@ -67,8 +68,6 @@
             this.listBox_listen = new System.Windows.Forms.ListBox();
             this.groupBox_status = new System.Windows.Forms.GroupBox();
             this.button_start = new System.Windows.Forms.Button();
-            this.radioButton_Apache = new System.Windows.Forms.RadioButton();
-            this.groupBox_webserver = new System.Windows.Forms.GroupBox();
             this.serviceController_main = new System.ServiceProcess.ServiceController();
             this.groupBox_MDservice = new System.Windows.Forms.GroupBox();
             this.checkBox_go_system = new System.Windows.Forms.CheckBox();
@@ -100,16 +99,19 @@
             this.ToolStripMenuItem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_close = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkBox_MySQL = new System.Windows.Forms.CheckBox();
+            this.menuItem_php_list = new System.Windows.Forms.MenuItem();
+            this.radioButton_Apache = new System.Windows.Forms.RadioButton();
+            this.groupBox_webserver = new System.Windows.Forms.GroupBox();
+            this.menuItem_php_list_0 = new System.Windows.Forms.MenuItem();
             this.statusStrip_main.SuspendLayout();
             this.groupBox_manage.SuspendLayout();
             this.groupBox_sql.SuspendLayout();
             this.groupBox_tool.SuspendLayout();
             this.groupBox_usually.SuspendLayout();
             this.groupBox_status.SuspendLayout();
-            this.groupBox_webserver.SuspendLayout();
             this.groupBox_MDservice.SuspendLayout();
             this.contextMenuStrip_main.SuspendLayout();
+            this.groupBox_webserver.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip_main
@@ -218,6 +220,17 @@
             this.groupBox_sql.TabIndex = 8;
             this.groupBox_sql.TabStop = false;
             this.groupBox_sql.Text = "SQL and NoSQL";
+            // 
+            // checkBox_MySQL
+            // 
+            this.checkBox_MySQL.AutoSize = true;
+            this.checkBox_MySQL.Location = new System.Drawing.Point(16, 22);
+            this.checkBox_MySQL.Name = "checkBox_MySQL";
+            this.checkBox_MySQL.Size = new System.Drawing.Size(54, 16);
+            this.checkBox_MySQL.TabIndex = 7;
+            this.checkBox_MySQL.Text = "MySQL";
+            this.checkBox_MySQL.UseVisualStyleBackColor = true;
+            this.checkBox_MySQL.CheckedChanged += new System.EventHandler(this.checkBox_MySQL_CheckedChanged);
             // 
             // button_mongo_admin
             // 
@@ -537,28 +550,6 @@
             this.button_start.UseVisualStyleBackColor = true;
             this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
-            // radioButton_Apache
-            // 
-            this.radioButton_Apache.AutoSize = true;
-            this.radioButton_Apache.Checked = true;
-            this.radioButton_Apache.Location = new System.Drawing.Point(7, 19);
-            this.radioButton_Apache.Name = "radioButton_Apache";
-            this.radioButton_Apache.Size = new System.Drawing.Size(59, 16);
-            this.radioButton_Apache.TabIndex = 0;
-            this.radioButton_Apache.TabStop = true;
-            this.radioButton_Apache.Text = "Apache";
-            this.radioButton_Apache.UseVisualStyleBackColor = true;
-            // 
-            // groupBox_webserver
-            // 
-            this.groupBox_webserver.Controls.Add(this.radioButton_Apache);
-            this.groupBox_webserver.Location = new System.Drawing.Point(7, 12);
-            this.groupBox_webserver.Name = "groupBox_webserver";
-            this.groupBox_webserver.Size = new System.Drawing.Size(91, 61);
-            this.groupBox_webserver.TabIndex = 0;
-            this.groupBox_webserver.TabStop = false;
-            this.groupBox_webserver.Text = "WebServer";
-            // 
             // groupBox_MDservice
             // 
             this.groupBox_MDservice.Controls.Add(this.checkBox_go_system);
@@ -668,7 +659,8 @@
             this.menuItem_php.Index = 2;
             this.menuItem_php.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem_php_conf,
-            this.menuItem_PHPext});
+            this.menuItem_PHPext,
+            this.menuItem_php_list});
             this.menuItem_php.Text = "PHP设置";
             // 
             // menuItem_php_conf
@@ -781,16 +773,39 @@
             this.ToolStripMenuItem_exit.Text = "退出MDserver程序";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
             // 
-            // checkBox_MySQL
+            // menuItem_php_list
             // 
-            this.checkBox_MySQL.AutoSize = true;
-            this.checkBox_MySQL.Location = new System.Drawing.Point(16, 22);
-            this.checkBox_MySQL.Name = "checkBox_MySQL";
-            this.checkBox_MySQL.Size = new System.Drawing.Size(54, 16);
-            this.checkBox_MySQL.TabIndex = 7;
-            this.checkBox_MySQL.Text = "MySQL";
-            this.checkBox_MySQL.UseVisualStyleBackColor = true;
-            this.checkBox_MySQL.CheckedChanged += new System.EventHandler(this.checkBox_MySQL_CheckedChanged);
+            this.menuItem_php_list.Index = 2;
+            this.menuItem_php_list.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem_php_list_0});
+            this.menuItem_php_list.Text = "当前版本";
+            // 
+            // radioButton_Apache
+            // 
+            this.radioButton_Apache.AutoSize = true;
+            this.radioButton_Apache.Checked = true;
+            this.radioButton_Apache.Location = new System.Drawing.Point(7, 19);
+            this.radioButton_Apache.Name = "radioButton_Apache";
+            this.radioButton_Apache.Size = new System.Drawing.Size(59, 16);
+            this.radioButton_Apache.TabIndex = 0;
+            this.radioButton_Apache.TabStop = true;
+            this.radioButton_Apache.Text = "Apache";
+            this.radioButton_Apache.UseVisualStyleBackColor = true;
+            // 
+            // groupBox_webserver
+            // 
+            this.groupBox_webserver.Controls.Add(this.radioButton_Apache);
+            this.groupBox_webserver.Location = new System.Drawing.Point(7, 12);
+            this.groupBox_webserver.Name = "groupBox_webserver";
+            this.groupBox_webserver.Size = new System.Drawing.Size(91, 61);
+            this.groupBox_webserver.TabIndex = 0;
+            this.groupBox_webserver.TabStop = false;
+            this.groupBox_webserver.Text = "WebServer";
+            // 
+            // menuItem_php_list_0
+            // 
+            this.menuItem_php_list_0.Index = 0;
+            this.menuItem_php_list_0.Text = "版本列表";
             // 
             // MDserv
             // 
@@ -826,11 +841,11 @@
             this.groupBox_tool.ResumeLayout(false);
             this.groupBox_usually.ResumeLayout(false);
             this.groupBox_status.ResumeLayout(false);
-            this.groupBox_webserver.ResumeLayout(false);
-            this.groupBox_webserver.PerformLayout();
             this.groupBox_MDservice.ResumeLayout(false);
             this.groupBox_MDservice.PerformLayout();
             this.contextMenuStrip_main.ResumeLayout(false);
+            this.groupBox_webserver.ResumeLayout(false);
+            this.groupBox_webserver.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -862,8 +877,6 @@
         private System.Windows.Forms.ListBox listBox_listen;
         private System.Windows.Forms.GroupBox groupBox_status;
         private System.Windows.Forms.Button button_start;
-        private System.Windows.Forms.RadioButton radioButton_Apache;
-        private System.Windows.Forms.GroupBox groupBox_webserver;
         private System.Windows.Forms.Button button_regedit;
         private System.ServiceProcess.ServiceController serviceController_main;
         private System.Windows.Forms.Button button_author;
@@ -909,6 +922,10 @@
         private System.Windows.Forms.Button button_mongo_admin;
         private System.Windows.Forms.Button button_redis_admin;
         private System.Windows.Forms.CheckBox checkBox_MySQL;
+        private System.Windows.Forms.MenuItem menuItem_php_list;
+        private System.Windows.Forms.MenuItem menuItem_php_list_0;
+        private System.Windows.Forms.RadioButton radioButton_Apache;
+        private System.Windows.Forms.GroupBox groupBox_webserver;
     }
 }
 
