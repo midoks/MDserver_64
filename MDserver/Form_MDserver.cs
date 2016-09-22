@@ -1008,7 +1008,7 @@ namespace MDserver
             Thread.Sleep(1500);
             
             //延迟执行
-            System.Timers.Timer timer = new System.Timers.Timer(1);
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_Apache_lazy);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -1607,7 +1607,6 @@ namespace MDserver
                 else
                 {
                     service.Start();
-
                     for (int i = 0; i < 20; i++)
                     {
                         System.Threading.Thread.Sleep(500);
