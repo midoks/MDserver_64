@@ -63,7 +63,9 @@ namespace MDserver
         //service name
         private static string MD_ApacheName = "MDserver-Apache";
         private static string MD_MySQL = "MDserver-MySQL";
+        private static string MD_Memcached = "memcached";
         private static string MD_Redis = "MDserver-Redis";
+        private static string MD_MongoDB = "MDserver-MongoDB";
 
         //默认php版本
         private static string PHP_VERSION = "php5.5";
@@ -220,12 +222,12 @@ namespace MDserver
         private void _check_status(object sender, System.Timers.ElapsedEventArgs e)
         {
             //Memcached
-            if (WQueryServiceIsStart("memcached"))
+            if (WQueryServiceIsStart(MD_Memcached))
             {
                 checkBox_memcached.Checked = true;
             }
             //MongoDB
-            if (WQueryServiceIsStart("MongoDB"))
+            if (WQueryServiceIsStart(MD_MongoDB))
             {
                 checkBox_MongoDB.Checked = true;
             }
@@ -310,19 +312,14 @@ namespace MDserver
                 {
                     _stop_webserver();
                     after_stop_SERVICE();
-                    Thread.Sleep(3000);
-                    Wstatus("Apache停止成功...");
-                    this.ini.WriteString("MDSERVER", "PHP_DIR", pitem.Text);
                     Thread.Sleep(1000);
+                    this.ini.WriteString("MDSERVER", "PHP_DIR", pitem.Text);
 
+                    Thread.Sleep(1000);
                     //this.PHPCurlFixAndPath(pitem.Text);
-
-                    Thread.Sleep(500);
-
                     _clear_record();
-                    Wstatus("正在启动中...");
                     pre_start_SERVICE();
-                    _start_webserver();
+                    _start_Apache();
                 }
                 else 
                 {
@@ -364,7 +361,6 @@ namespace MDserver
  
             //设置Path
             System.Environment.SetEnvironmentVariable("PATH", t + php_pos_m + ";");
-
 
 
             //string[] php_ts_dll_list = Directory.GetFiles(php_pos, "*ts.dll");
@@ -654,7 +650,7 @@ namespace MDserver
 
         private void checkBox_MySQL_CheckedChanged(object sender, EventArgs e)
         {
-            System.Timers.Timer timer = new System.Timers.Timer(1000);
+            System.Timers.Timer timer = new System.Timers.Timer(1);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_mysql_status);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -685,7 +681,7 @@ namespace MDserver
         //memcached 启动
         private void checkBox_memcached_CheckedChanged(object sender, EventArgs e)
         {
-            System.Timers.Timer timer = new System.Timers.Timer(1000);
+            System.Timers.Timer timer = new System.Timers.Timer(500);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_memcached_status);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -693,30 +689,30 @@ namespace MDserver
 
         private void _memcached_status(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (WQueryServiceIsStart("memcached") && checkBox_memcached.Checked)
+            if (WQueryServiceIsStart(MD_Memcached) && checkBox_memcached.Checked)
             {
                 return;
             }
             try
             {
                 string mdir = BaseDir + @"bin\Memcached\";
-                //System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController("memcached Server");
                 if (checkBox_memcached.Checked)
                 {
                     //Wcmd(BaseDir + @"bin/Memcached/memcached.exe -d stop");
                     //Wcmd(BaseDir + @"bin/Memcached/memcached.exe -d uninstall");
                     Wcmd(mdir + @"memcached.exe -d install");
                     Thread.Sleep(1000);
-                    Wcmd(mdir + @"memcached.exe -d start");
-                    Wstatus("memcached 启动成功!!!");
+                    WStart_S(MD_Memcached);
+                    //Wcmd(mdir + @"memcached.exe -d start");
                     //Wcmd(str + @"bin/Memcached/memcached.exe -d runservice -m 64 -c 2048 -p 11211");
                 }
                 else
                 {
-                    Wcmd(mdir + @"memcached.exe -d stop");
-                    Thread.Sleep(2000);
-                    Wcmd(mdir + @"memcached.exe -d uninstall");
-                    Wstatus("memcached 停止成功!!!");
+                    bool ret = WStop_S(MD_Memcached);
+                    if (ret)
+                    {
+                        Wcmd(mdir + @"memcached.exe -d uninstall");
+                    }
                 }
             }
             catch (Exception ex)
@@ -739,7 +735,7 @@ namespace MDserver
         private void _MongoDB_status(object sender, System.Timers.ElapsedEventArgs e)
         {
 
-            if (WQueryServiceIsStart("MongoDB") && checkBox_MongoDB.Checked)
+            if (WQueryServiceIsStart(MD_MongoDB) && checkBox_MongoDB.Checked)
             {
                 return;
             }
@@ -749,25 +745,22 @@ namespace MDserver
                 string mdir_Exe = BaseDir + @"bin\Mongo\bin\mongod.exe";
                 if (checkBox_MongoDB.Checked)
                 {
-
-                    Wcmd_Exe(mdir_Exe, @" --logpath " + mdir + @"log\log.txt --dbpath " + mdir + @"data --serviceName MongoDB --install ");
+                    Wcmd_Exe(mdir_Exe, @" --logpath " + mdir + @"log\log.txt --dbpath " + mdir + @"data --serviceName " + MD_MongoDB + " --install ");
                     Thread.Sleep(1000);
-                    WStart("MongoDB");
-                    Wstatus("MongoDB 启动成功!!!");
+                    WStart_S(MD_MongoDB);
                 }
                 else
                 {
-                    WStop("MongoDB");
-                    System.Threading.Thread.Sleep(1000);
-                    Wcmd_Exe(mdir_Exe, @" --logpath " + mdir + @"log\log.txt --dbpath " + mdir + @"data --serviceName MongoDB --remove");
-                    Wstatus("MongoDB 停止成功!!!");
+                    bool ret = WStop_S(MD_MongoDB);
+                    if(ret){
+                        Wcmd_Exe(mdir_Exe, @" --logpath " + mdir + @"log\log.txt --dbpath " + mdir + @"data --serviceName " + MD_MongoDB + " --remove");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Wstatus("MongoDB " + ex.Message);
+                Wstatus(MD_MongoDB + ex.Message);
             }
-
         }
 
         //Redis
@@ -793,18 +786,15 @@ namespace MDserver
                 if (checkBox_Redis.Checked)
                 {
                     Wcmd_Exe(mdir_Exe, " --service-install " + mdir + @"redis.conf --service-name " + MD_Redis);
-                    //Wcmd(mdir_Exe + " " + mdir + @"redis.conf");
-                    WStart(MD_Redis);
                     Thread.Sleep(1000);
-                    Wstatus("Redis 启动成功!!!");
+                    WStart_S(MD_Redis);
                 }
                 else
                 {
-                    WStop(MD_Redis);
-                    Thread.Sleep(1000);
-                    //WUninstall(MD_Redis);
-                    Wcmd_Exe(mdir_Exe, " --service-uninstall " + mdir + @"redis.conf --service-name " + MD_Redis);
-                    Wstatus("Redis 停止成功!!!");
+                    bool ret = WStop_S(MD_Redis);
+                    if(ret){
+                        Wcmd_Exe(mdir_Exe, " --service-uninstall " + mdir + @"redis.conf --service-name " + MD_Redis);
+                    }
                 }
             }
             catch (Exception ex)
@@ -968,7 +958,6 @@ namespace MDserver
             //__Delete(BaseDir + @"bin\Nginx\myapp.out.log.old");
             //__Delete(BaseDir + @"bin\Nginx\myapp.wrapper.log");
             //__Delete(BaseDir + @"bin\Nginx\myapp.xml");
-            //_clear_file_log(BaseDir + @"bin\Apache\logs\access.log");
         }
 
         //清楚文件
@@ -1000,19 +989,11 @@ namespace MDserver
             //log(Application.ExecutablePath);
             Wstatus("正在启动中...");
             pre_start_SERVICE();
-            _start_webserver();
+            _start_Apache();
 
             this.button_start.Enabled = false;
             this.ini.WriteInteger("MDSERVER", "MD_RUN", 1);
             this.ini.WriteString("MDSERVER", "RUN_DIR", BaseDir.Replace("/", "\\"));
-        }
-
-        //启动web服务器
-        private void _start_webserver()
-        {
-            //apache单选框状态
-            bool apache = radioButton_Apache.Checked;
-             _start_Apache();
         }
 
         //启动apache
@@ -1025,9 +1006,9 @@ namespace MDserver
             log(apache + " " + arg);
             Wcmd(apache + " " + arg);
             Thread.Sleep(1500);
-            Wcmd("net start " + MD_ApacheName);
+            
             //延迟执行
-            System.Timers.Timer timer = new System.Timers.Timer(5000);
+            System.Timers.Timer timer = new System.Timers.Timer(1);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_Apache_lazy);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -1035,14 +1016,7 @@ namespace MDserver
 
         private void _start_Apache_lazy(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (WQueryServiceIsStart(MD_ApacheName))
-            {
-                Wstatus(MD_ApacheName + "启动成功!!!");
-            }
-            else
-            {
-                Wstatus(MD_ApacheName + "启动失败!!!");
-            }
+            WStart_S(MD_ApacheName);
         }
 
         //MySQL
@@ -1055,11 +1029,10 @@ namespace MDserver
             {
                 Wcmd(installName);
             }
-            Thread.Sleep(1500);
-            Wcmd("net start " + MD_MySQL);
+            Thread.Sleep(1000);
 
             //延迟执行
-            System.Timers.Timer timer = new System.Timers.Timer(2000);
+            System.Timers.Timer timer = new System.Timers.Timer(1);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_mysql_lazy);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -1067,14 +1040,7 @@ namespace MDserver
 
         private void _start_mysql_lazy(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (WQueryServiceIsStart(MD_MySQL))
-            {
-                Wstatus(MD_MySQL + "启动成功!!!");
-            }
-            else
-            {
-                Wstatus(MD_MySQL + "启动失败!!!");
-            }
+            WStart_S(MD_MySQL);
         }
 
         //停止服务
@@ -1087,7 +1053,6 @@ namespace MDserver
 
             this.ini.WriteInteger("MDSERVER", "MD_RUN", 0);
             this.ini.WriteString("MDSERVER", "RUN_DIR", "");
-
         }
 
         //停止web服务
@@ -1103,37 +1068,31 @@ namespace MDserver
         private void _stop_apache()
         {
             if (WServiceIsExisted(MD_ApacheName))
-            {
-                Wcmd("net stop " + MD_ApacheName);
-                Thread.Sleep(1000);
-
-                string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
-              
-                string apache = BaseDir + @"bin\"+ apache_dir +@"\bin\httpd.exe";
-                string arg = "-k uninstall -n " + MD_ApacheName;
-                Wcmd(apache + " " + arg);
-
+            {  
                 //延迟执行
-                System.Timers.Timer timer = new System.Timers.Timer(3000);
+                System.Timers.Timer timer = new System.Timers.Timer(1);
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(_stop_apache_lazy);
                 timer.Enabled = true;
                 timer.AutoReset = false;
+            }
+            else
+            {
+                Wstatus(MD_ApacheName + "已经停止!");
             }
         }
 
         private void _stop_apache_lazy(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (!WServiceIsExisted(MD_ApacheName) || !WQueryServiceIsStart(MD_ApacheName))
+            bool ret = WStop_S(MD_ApacheName);
+            if (ret)
             {
-                Wstatus(MD_ApacheName + "停止成功!!!");
-            }
-            else
-            {
-                Wstatus(MD_ApacheName + "停止失败!!!");
+                string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
+
+                string apache = BaseDir + @"bin\" + apache_dir + @"\bin\httpd.exe";
+                string arg = "-k uninstall -n " + MD_ApacheName;
+                Wcmd(apache + " " + arg);
             }
         }
-
-     
 
         //停止mysql
         private void _stop_mysql()
@@ -1141,14 +1100,11 @@ namespace MDserver
             string dir = BaseDir + @"bin\MySQL\";
             if (WServiceIsExisted(MD_MySQL))
             {
-                WStop( MD_MySQL);
-                Thread.Sleep(1000);
                 //string installName = dir + @"bin\mysqld " + "remove " + MD_MySQL;
                 //Wcmd(installName);
-                WUninstall(MD_MySQL);
-
+               
                 //延迟执行
-                System.Timers.Timer timer = new System.Timers.Timer(5000);
+                System.Timers.Timer timer = new System.Timers.Timer(500);
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(_stop_mysql_lazy);
                 timer.Enabled = true;
                 timer.AutoReset = false;
@@ -1157,13 +1113,10 @@ namespace MDserver
 
         private void _stop_mysql_lazy(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (!WServiceIsExisted(MD_MySQL) || !WQueryServiceIsStart(MD_MySQL))
+            bool ret = WStop_S(MD_MySQL);
+            if (ret)
             {
-                Wstatus(MD_MySQL + "停止成功!!!");
-            }
-            else
-            {
-                Wstatus(MD_MySQL + "停止失败!!!");
+                WUninstall(MD_MySQL);
             }
         }
        
@@ -1648,61 +1601,68 @@ namespace MDserver
                 System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController(serviceName);
                 if (service.Status == System.ServiceProcess.ServiceControllerStatus.Running)
                 {
-
-                    Wstatus_add("," + serviceName + "已经启动成功!!!");
+                    Wstatus(serviceName + "已经启动成功!!!");
                     return true;
                 }
                 else
                 {
                     service.Start();
-                    for (int i = 0; i < 60; i++)
+
+                    for (int i = 0; i < 20; i++)
                     {
-                        service.Start();
-                        service.Refresh();
-                        System.Threading.Thread.Sleep(1000);
+                        System.Threading.Thread.Sleep(500);
                         if (service.Status == System.ServiceProcess.ServiceControllerStatus.Running)
                         {
-
-                            Wstatus_add("," + serviceName + "启动成功!!!");
-                            break;
+                            Wstatus(serviceName + "启动成功!!!");
+                            return true;
+                        } if (i == 19) {
+                            Wstatus(serviceName + "启动失败!!!");
                         }
-                        if (i == 59)
-                        {
-                            Wstatus_add("," + serviceName + "启动失败!!!");
-                        }
+                        service.Refresh();
                     }
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Wstatus_add(ex.Message);
-                return false;
-            }
-        }
-
-
-        //暂停服务
-        private void WStop_S(string serviceName)
-        {
-            try
-            {
-                System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController(serviceName);
-                if (service.Status == System.ServiceProcess.ServiceControllerStatus.Running)
-                {
-                    service.Stop();
-                    Wstatus_add("," + serviceName + "停止成功!!!");
-                }
-                else
-                {
-                    Wstatus_add("," + serviceName + "已经停止!!!");
-                    service.Refresh();
                 }
             }
             catch (Exception ex)
             {
                 Wstatus(ex.Message);
             }
+            return false;
+        }
+
+
+        //暂停服务
+        private bool WStop_S(string serviceName)
+        {
+            try
+            {
+                System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController(serviceName);
+                if (service.Status == System.ServiceProcess.ServiceControllerStatus.Stopped)
+                {
+                    Wstatus(serviceName + "已经停止成功!!!");
+                    return true;
+                }
+                else
+                {
+                    service.Stop();
+                    for (int i = 0; i < 20; i++)
+                    {
+                        System.Threading.Thread.Sleep(500);
+                        if (service.Status == System.ServiceProcess.ServiceControllerStatus.Stopped)
+                        {
+                            Wstatus(serviceName + "停止成功!!!");
+                            return true;
+                        } if (i == 19) {
+                            Wstatus(serviceName + "停止失败!!!");
+                        }
+                        service.Refresh();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Wstatus(ex.Message);
+            }
+            return false;
         }
 
         //查看服务状态
@@ -1833,6 +1793,11 @@ namespace MDserver
 
         private void menuItem_apache_Click(object sender, EventArgs e)
         {}
+
+        private void groupBox_tool_Enter(object sender, EventArgs e)
+        {
+
+        }
 
        
     }

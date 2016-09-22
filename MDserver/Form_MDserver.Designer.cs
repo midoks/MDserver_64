@@ -85,6 +85,8 @@
             this.menuItem_php = new System.Windows.Forms.MenuItem();
             this.menuItem_php_conf = new System.Windows.Forms.MenuItem();
             this.menuItem_PHPext = new System.Windows.Forms.MenuItem();
+            this.menuItem_php_list = new System.Windows.Forms.MenuItem();
+            this.menuItem_php_list_0 = new System.Windows.Forms.MenuItem();
             this.menuItem_webOP = new System.Windows.Forms.MenuItem();
             this.menuItem_op_www = new System.Windows.Forms.MenuItem();
             this.menuItem_cgi_bin = new System.Windows.Forms.MenuItem();
@@ -99,10 +101,8 @@
             this.ToolStripMenuItem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_close = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItem_php_list = new System.Windows.Forms.MenuItem();
             this.radioButton_Apache = new System.Windows.Forms.RadioButton();
             this.groupBox_webserver = new System.Windows.Forms.GroupBox();
-            this.menuItem_php_list_0 = new System.Windows.Forms.MenuItem();
             this.statusStrip_main.SuspendLayout();
             this.groupBox_manage.SuspendLayout();
             this.groupBox_sql.SuspendLayout();
@@ -398,6 +398,7 @@
             this.groupBox_tool.TabIndex = 10;
             this.groupBox_tool.TabStop = false;
             this.groupBox_tool.Text = "小工具";
+            this.groupBox_tool.Enter += new System.EventHandler(this.groupBox_tool_Enter);
             // 
             // button_make_link
             // 
@@ -675,6 +676,18 @@
             this.menuItem_PHPext.Text = "扩展";
             this.menuItem_PHPext.Click += new System.EventHandler(this.menuItem_PHPext_Click);
             // 
+            // menuItem_php_list
+            // 
+            this.menuItem_php_list.Index = 2;
+            this.menuItem_php_list.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem_php_list_0});
+            this.menuItem_php_list.Text = "当前版本";
+            // 
+            // menuItem_php_list_0
+            // 
+            this.menuItem_php_list_0.Index = 0;
+            this.menuItem_php_list_0.Text = "版本列表";
+            // 
             // menuItem_webOP
             // 
             this.menuItem_webOP.Index = 3;
@@ -773,13 +786,6 @@
             this.ToolStripMenuItem_exit.Text = "退出MDserver程序";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
             // 
-            // menuItem_php_list
-            // 
-            this.menuItem_php_list.Index = 2;
-            this.menuItem_php_list.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem_php_list_0});
-            this.menuItem_php_list.Text = "当前版本";
-            // 
             // radioButton_Apache
             // 
             this.radioButton_Apache.AutoSize = true;
@@ -801,11 +807,6 @@
             this.groupBox_webserver.TabIndex = 0;
             this.groupBox_webserver.TabStop = false;
             this.groupBox_webserver.Text = "WebServer";
-            // 
-            // menuItem_php_list_0
-            // 
-            this.menuItem_php_list_0.Index = 0;
-            this.menuItem_php_list_0.Text = "版本列表";
             // 
             // MDserv
             // 

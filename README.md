@@ -52,6 +52,7 @@ localhost/phpMongodb
 ###相关链接
 - 安装文件地址:[v3.6](http://pan.baidu.com/s/1gft2KX9)
 - 安装文件地址:[v3.7](http://pan.baidu.com/s/1kV2izmJ)
+- 安装文件地址:[v3.7.1](http://pan.baidu.com/s/1sleVGap)
 
 
 
