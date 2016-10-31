@@ -35,14 +35,22 @@ FSCapture		截图工具
 
 MySQL后台:
 localhost/phpMyAdmin
+127.0.0.1/phpRedisAdmin
 
 Redis后台:
 localhost/phpRedisAdmin
+或
+127.0.0.1/phpRedisAdmin
 
 Mongodb后台:
 localhost/phpMongodb
+或
+127.0.0.1/phpMongodb
 
 3.新增php版本切换功能(在php设置下面)
+
+4.调试
+127.0.0.1/info.php?mdd=ok
 
 一些问题:
 1.第一启动的时候,会遇到一些阻碍,比如360的安全警报。
@@ -50,16 +58,11 @@ localhost/phpMongodb
 ```
 
 ###相关链接
-- 安装文件地址:[v3.6](http://pan.baidu.com/s/1gft2KX9)
-- 安装文件地址:[v3.7](http://pan.baidu.com/s/1kV2izmJ)
+- 安装文件地址:[v3.7.3](http://pan.baidu.com/s/1bpcczwj)
 - 安装文件地址:[v3.7.2](http://pan.baidu.com/s/1nvGrB4l)
-
-
+- 安装文件地址:[v3.7](http://pan.baidu.com/s/1kV2izmJ)
+- 安装文件地址:[v3.6](http://pan.baidu.com/s/1gft2KX9)
 
 ### 截图
-
-[![截图](/images/screen_1.jpg)](/images/screen_1.jpg)
-
-- 新增php多版本支持
 
 [![截图](/images/screen_2.jpg)](/images/screen_2.jpg)
