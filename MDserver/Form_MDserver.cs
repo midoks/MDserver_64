@@ -310,12 +310,21 @@ namespace MDserver
                 DialogResult qa = MessageBox.Show("你要切换到" + pitem.Text + ",当前正在运行中,是否重新启动!!!", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (qa == DialogResult.Yes)
                 {
-                    _stop_webserver();
-                    after_stop_SERVICE();
-                    Thread.Sleep(1000);
-                    this.ini.WriteString("MDSERVER", "PHP_DIR", pitem.Text);
+                    //_stop_apache();
+                    bool ret = WStop_S(MD_ApacheName);
+                    if (ret)
+                    {
+                        string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
-                    Thread.Sleep(1000);
+                        string apache = BaseDir + @"bin\" + apache_dir + @"\bin\httpd.exe";
+                        string arg = "-k uninstall -n " + MD_ApacheName;
+                        Wcmd(apache + " " + arg);
+                    }
+                    after_stop_SERVICE();
+                    this.ini.WriteString("MDSERVER", "PHP_DIR", pitem.Text);
+       
+
+                    Thread.Sleep(3000);
                     //this.PHPCurlFixAndPath(pitem.Text);
                     _clear_record();
                     pre_start_SERVICE();
@@ -650,7 +659,7 @@ namespace MDserver
 
         private void checkBox_MySQL_CheckedChanged(object sender, EventArgs e)
         {
-            System.Timers.Timer timer = new System.Timers.Timer(1);
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_mysql_status);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -1005,10 +1014,10 @@ namespace MDserver
             string arg = "-k install -n " + MD_ApacheName;
             log(apache + " " + arg);
             Wcmd(apache + " " + arg);
-            Thread.Sleep(1500);
+            Thread.Sleep(3000);
             
             //延迟执行
-            System.Timers.Timer timer = new System.Timers.Timer(3000);
+            System.Timers.Timer timer = new System.Timers.Timer(1500);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_Apache_lazy);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -1032,7 +1041,7 @@ namespace MDserver
             Thread.Sleep(1000);
 
             //延迟执行
-            System.Timers.Timer timer = new System.Timers.Timer(1);
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_mysql_lazy);
             timer.Enabled = true;
             timer.AutoReset = false;
@@ -1046,22 +1055,14 @@ namespace MDserver
         //停止服务
         private void button_stop_Click(object sender, EventArgs e)
         {
-           
-            _stop_webserver();
+
+            _stop_apache();
             after_stop_SERVICE();
             this.button_start.Enabled = true;
 
             this.ini.WriteInteger("MDSERVER", "MD_RUN", 0);
             this.ini.WriteString("MDSERVER", "RUN_DIR", "");
         }
-
-        //停止web服务
-        private void _stop_webserver()
-        {
-            Wstatus("正在停止中...");
-            _stop_apache();
-        }
-
         
 
         //停止卸载Apache
@@ -1070,7 +1071,7 @@ namespace MDserver
             if (WServiceIsExisted(MD_ApacheName))
             {  
                 //延迟执行
-                System.Timers.Timer timer = new System.Timers.Timer(1);
+                System.Timers.Timer timer = new System.Timers.Timer(1000);
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(_stop_apache_lazy);
                 timer.Enabled = true;
                 timer.AutoReset = false;
@@ -1609,7 +1610,7 @@ namespace MDserver
                     service.Start();
                     for (int i = 0; i < 20; i++)
                     {
-                        System.Threading.Thread.Sleep(500);
+                        System.Threading.Thread.Sleep(1000);
                         if (service.Status == System.ServiceProcess.ServiceControllerStatus.Running)
                         {
                             Wstatus(serviceName + "启动成功!!!");
