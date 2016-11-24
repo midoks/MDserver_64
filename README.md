@@ -58,6 +58,9 @@ localhost/phpMongodb
 一些问题:
 1.第一启动的时候,会遇到一些阻碍,比如360的安全警报。
 2.都要选择线程安全的php版本
+3.在使用过程中遇到Win10默认占用80端口,解决Win10默认占用80端口.
+(http://jingyan.baidu.com/article/08b6a591a31d8914a8092214.html)
+
 ```
 
 ###相关链接
