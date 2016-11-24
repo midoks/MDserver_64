@@ -26,7 +26,10 @@ SecureCRT		ssh登陆
 HeidiSQL		数据库管理
 FSCapture		截图工具
 
-2.PHP集成yaf框架,lumen,phalcon..等必备的扩展和开发工具
+2.PHP集成yaf框架,lumen,phalcon,php_apm,
+php_apm,php_bitset,php_seaslog,php_solr,
+php_sphinx,php_varnish
+等必备的扩展和开发工具
 
 注意：
 1.MySQL默认用户名：root，密码为空
@@ -58,6 +61,7 @@ localhost/phpMongodb
 ```
 
 ###相关链接
+- [v3.7.5](http://pan.baidu.com/s/1pLnQ3az)
 - [v3.7.4](http://pan.baidu.com/s/1o8FBMEA)
 - [v3.7.3](http://pan.baidu.com/s/1bpcczwj)
 - [v3.7.2](http://pan.baidu.com/s/1nvGrB4l)
