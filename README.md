@@ -20,7 +20,7 @@ Rythem			HTTP抓包工具
 Putty			SSH登录工具
 WinSCP			SSH登录工具
 FlashFxp		FTP登录工具
-VIM			代码编辑器
+VIM				代码编辑器
 kcachegrind		Xdebug分析器
 SecureCRT		ssh登陆
 HeidiSQL		数据库管理
