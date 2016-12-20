@@ -9,7 +9,7 @@ MDserverV3(PHP环境一键集成),文件采用7-Zip压缩,将解压缩到一个�
 这是64位版本的。
      
 1.MDserver集成了一下软件:
-PHP5.5.28(TS)
+PHP5.5.29(TS) | PHP7.0(TS) | PHP7.1(TS)
 Apache2.4.7
 MySQL 5.6.24
 memcached
@@ -55,6 +55,10 @@ localhost/phpMongodb
 4.调试
 127.0.0.1/info.php?mdd=ok
 
+5.imagick扩展集成
+安装文件在bin文件下,也可以自己下载:http://www.imagemagick.org/download/binaries/
+安装后,需要重新启动电脑。重启电脑后,生效
+
 一些问题:
 1.第一启动的时候,会遇到一些阻碍,比如360的安全警报。
 2.都要选择线程安全的php版本
@@ -64,6 +68,7 @@ localhost/phpMongodb
 ```
 
 ###相关链接
+- [v3.7.6](http://pan.baidu.com/s/1o80LnMq)
 - [v3.7.5](http://pan.baidu.com/s/1pLnQ3az)
 - [v3.7.4](http://pan.baidu.com/s/1o8FBMEA)
 - [v3.7.3](http://pan.baidu.com/s/1bpcczwj)
