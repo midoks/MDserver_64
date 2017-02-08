@@ -70,7 +70,8 @@ localhost/phpMongodb
 ###相关链接
 - [v3.7.8](http://pan.baidu.com/s/1kVuit4j)
  * 减少php70版本维护
- * 
+ * 增加php71一些扩展
+
 - [v3.7.7](http://pan.baidu.com/s/1bpCDuk3)
  * 修复xhprof不能使用的问题(官方的存在问题)
 - [v3.7.6](http://pan.baidu.com/s/1o80LnMq)
