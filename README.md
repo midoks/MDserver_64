@@ -9,7 +9,7 @@ MDserverV3(PHP环境一键集成),文件采用7-Zip压缩,将解压缩到一个�
 这是64位版本的。
      
 1.MDserver集成了一下软件:
-PHP5.5.29(TS) | PHP7.0(TS) | PHP7.1(TS)
+PHP5.5.29(TS) | PHP7.1(TS)
 Apache2.4.7
 MySQL 5.6.24
 memcached
@@ -68,6 +68,9 @@ localhost/phpMongodb
 ```
 
 ###相关链接
+- [v3.7.8](http://pan.baidu.com/s/1kVuit4j)
+ * 减少php70版本维护
+ * 
 - [v3.7.7](http://pan.baidu.com/s/1bpCDuk3)
  * 修复xhprof不能使用的问题(官方的存在问题)
 - [v3.7.6](http://pan.baidu.com/s/1o80LnMq)
