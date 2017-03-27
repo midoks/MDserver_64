@@ -1,4 +1,4 @@
-﻿namespace MDserver
+namespace MDserver
 {
     partial class AboutForm
     {
