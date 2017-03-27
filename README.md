@@ -68,6 +68,10 @@ localhost/phpMongodb
 ```
 
 ###相关链接
+- [v3.7.9.1](https://pan.baidu.com/s/1bpy5gIj)
+ * memcache.php工具添加
+ * memcache(www/cmd)启动bat
+ 
 - [v3.7.9](http://pan.baidu.com/s/1dE6qDQL)
  * php71版本增加memcache扩展
 
