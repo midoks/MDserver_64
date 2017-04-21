@@ -65,6 +65,13 @@ localhost/phpMongodb
 3.在使用过程中遇到Win10默认占用80端口,解决Win10默认占用80端口.
 (http://jingyan.baidu.com/article/08b6a591a31d8914a8092214.html)
 
+
+- httpd.exe你的电脑中缺失msvcr110.dll
+http://www.microsoft.com/en-us/download/details.aspx?id=30679
+
+- 应用程序无法正常启动0xc000007b解决方法
+http://jingyan.baidu.com/article/4dc408488ff783c8d946f1e8.html
+
 ```
 
 ###相关链接
