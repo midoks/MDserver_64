@@ -68,7 +68,7 @@ namespace MDserver
         private static string MD_MongoDB = "MDserver-MongoDB";
 
         //默认php版本
-        private static string PHP_VERSION = "php5.5";
+        private static string PHP_VERSION = "php55";
 
         private SystemINI ini;
 
@@ -586,9 +586,12 @@ namespace MDserver
         //修改host
         private void button_mod_host_Click(object sender, EventArgs e)
         {
-            string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
-            string path = @"C:\Windows\System32\drivers\etc\hosts";
-            System.Diagnostics.Process.Start(vim, path);
+            //string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
+            //string path = @"C:\Windows\System32\drivers\etc\hosts";
+            //System.Diagnostics.Process.Start(vim, path);
+
+            Form b1 = new WebSite();
+            b1.ShowDialog();
         }
 
         //定时显示 监听状态

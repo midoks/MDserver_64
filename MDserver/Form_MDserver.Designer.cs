@@ -481,7 +481,7 @@ namespace MDserver
             this.button_mod_host.Name = "button_mod_host";
             this.button_mod_host.Size = new System.Drawing.Size(66, 23);
             this.button_mod_host.TabIndex = 5;
-            this.button_mod_host.Text = "HOST文件";
+            this.button_mod_host.Text = "HOST管理";
             this.button_mod_host.UseVisualStyleBackColor = true;
             this.button_mod_host.Click += new System.EventHandler(this.button_mod_host_Click);
             // 

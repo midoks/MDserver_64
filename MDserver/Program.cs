@@ -15,8 +15,8 @@ namespace MDserver
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            superMain();
-            //Application.Run(new MDserv());
+            //superMain();
+            Application.Run(new MDserv());
         }
 
         static void superMain() {
