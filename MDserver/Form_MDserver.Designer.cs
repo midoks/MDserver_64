@@ -103,6 +103,7 @@ namespace MDserver
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButton_Apache = new System.Windows.Forms.RadioButton();
             this.groupBox_webserver = new System.Windows.Forms.GroupBox();
+            this.button_host = new System.Windows.Forms.Button();
             this.statusStrip_main.SuspendLayout();
             this.groupBox_manage.SuspendLayout();
             this.groupBox_sql.SuspendLayout();
@@ -487,6 +488,7 @@ namespace MDserver
             // 
             // groupBox_usually
             // 
+            this.groupBox_usually.Controls.Add(this.button_host);
             this.groupBox_usually.Controls.Add(this.button_OP_lweb);
             this.groupBox_usually.Controls.Add(this.button_author);
             this.groupBox_usually.Controls.Add(this.button_mod_host);
@@ -501,7 +503,7 @@ namespace MDserver
             // 
             this.button_OP_lweb.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_OP_lweb.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button_OP_lweb.Location = new System.Drawing.Point(12, 75);
+            this.button_OP_lweb.Location = new System.Drawing.Point(12, 100);
             this.button_OP_lweb.Name = "button_OP_lweb";
             this.button_OP_lweb.Size = new System.Drawing.Size(66, 22);
             this.button_OP_lweb.TabIndex = 8;
@@ -512,7 +514,7 @@ namespace MDserver
             // button_author
             // 
             this.button_author.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_author.Location = new System.Drawing.Point(12, 46);
+            this.button_author.Location = new System.Drawing.Point(12, 71);
             this.button_author.Name = "button_author";
             this.button_author.Size = new System.Drawing.Size(66, 22);
             this.button_author.TabIndex = 7;
@@ -808,6 +810,23 @@ namespace MDserver
             this.groupBox_webserver.TabStop = false;
             this.groupBox_webserver.Text = "WebServer";
             // 
+            // button_host
+            // 
+            this.button_host.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button_host.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button_host.FlatAppearance.BorderSize = 0;
+            this.button_host.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.button_host.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.button_host.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_host.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button_host.Location = new System.Drawing.Point(12, 46);
+            this.button_host.Name = "button_host";
+            this.button_host.Size = new System.Drawing.Size(66, 23);
+            this.button_host.TabIndex = 9;
+            this.button_host.Text = "HOST查看";
+            this.button_host.UseVisualStyleBackColor = true;
+            this.button_host.Click += new System.EventHandler(this.button_host_Click);
+            // 
             // MDserv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -878,7 +897,7 @@ namespace MDserver
         private System.Windows.Forms.GroupBox groupBox_usually;
         private System.Windows.Forms.ListBox listBox_listen;
         private System.Windows.Forms.GroupBox groupBox_status;
-        private System.Windows.Forms.Button button_start;
+        public System.Windows.Forms.Button button_start;
         private System.Windows.Forms.Button button_regedit;
         private System.ServiceProcess.ServiceController serviceController_main;
         private System.Windows.Forms.Button button_author;
@@ -928,6 +947,7 @@ namespace MDserver
         private System.Windows.Forms.MenuItem menuItem_php_list_0;
         private System.Windows.Forms.RadioButton radioButton_Apache;
         private System.Windows.Forms.GroupBox groupBox_webserver;
+        private System.Windows.Forms.Button button_host;
     }
 }
 
