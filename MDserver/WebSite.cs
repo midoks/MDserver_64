@@ -4,6 +4,7 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace MDserver
 {
@@ -31,7 +32,7 @@ namespace MDserver
         {
             int vlen = value.Length;
             int padLen = len - vlen;
-            this.mainUI.log(padLen.ToString() + ":");
+            //this.mainUI.log(padLen.ToString() + ":");
             if (padLen > 0)
             {
                 value = value.PadRight(padLen, ' ');
@@ -308,6 +309,11 @@ namespace MDserver
             }
         }
 
+        public bool IsInt(string value)
+        {
+            return Regex.IsMatch(value, @"^[+-]?\d*$");
+        }
+
         private void textBox_Port_TextChanged(object sender, EventArgs e)
         {
             int index = domainList.CurrentRow.Index;
@@ -323,7 +329,15 @@ namespace MDserver
                     return;
                 }
 
-                int portInt = int.Parse(port);
+                if (!IsInt(port)) {
+                    MessageBox.Show("请输入数字!!");
+                    textBox_Port.Text = "80";
+                    domainList.Rows[index].Cells[1].Value = setLenValue("80", PORTLEN);
+                    return;
+                }
+
+                int portInt = Convert.ToInt32(port);
+                //this.mainUI.log(portInt.ToString());
                 if (portInt > 0 && portInt < 65536)
                 {
                     textBox_Port.Text = portInt.ToString();
@@ -335,6 +349,7 @@ namespace MDserver
                 {
                     MessageBox.Show("端口范围在0~65536之内");
                     textBox_Port.Text = "80";
+                    return;
                 }
 
             }

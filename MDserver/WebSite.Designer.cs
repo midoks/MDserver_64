@@ -30,10 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebSite));
             this.domainList = new System.Windows.Forms.DataGridView();
+            this.hostname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupList = new System.Windows.Forms.GroupBox();
             this.buttonDel = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button_RestartServer = new System.Windows.Forms.Button();
             this.textBox_rootDir = new System.Windows.Forms.TextBox();
             this.buttonSelectDir = new System.Windows.Forms.Button();
             this.buttonRootGo = new System.Windows.Forms.Button();
@@ -44,9 +47,6 @@
             this.textBox_hostname = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button_RestartServer = new System.Windows.Forms.Button();
-            this.hostname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.domainList)).BeginInit();
             this.groupList.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -70,6 +70,22 @@
             this.domainList.Size = new System.Drawing.Size(286, 197);
             this.domainList.TabIndex = 0;
             this.domainList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.domainList_CellContentClick);
+            // 
+            // hostname
+            // 
+            this.hostname.HeaderText = "hostname";
+            this.hostname.Name = "hostname";
+            this.hostname.ReadOnly = true;
+            this.hostname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // port
+            // 
+            this.port.HeaderText = "port";
+            this.port.MaxInputLength = 10;
+            this.port.Name = "port";
+            this.port.ReadOnly = true;
+            this.port.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.port.Width = 80;
             // 
             // groupList
             // 
@@ -126,6 +142,18 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Setting";
+            // 
+            // button_RestartServer
+            // 
+            this.button_RestartServer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_RestartServer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_RestartServer.Location = new System.Drawing.Point(15, 223);
+            this.button_RestartServer.Name = "button_RestartServer";
+            this.button_RestartServer.Size = new System.Drawing.Size(106, 23);
+            this.button_RestartServer.TabIndex = 10;
+            this.button_RestartServer.Text = "Restart Server";
+            this.button_RestartServer.UseVisualStyleBackColor = true;
+            this.button_RestartServer.Click += new System.EventHandler(this.button_RestartServer_Click);
             // 
             // textBox_rootDir
             // 
@@ -231,34 +259,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Server Name:";
             // 
-            // button_RestartServer
-            // 
-            this.button_RestartServer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_RestartServer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_RestartServer.Location = new System.Drawing.Point(15, 223);
-            this.button_RestartServer.Name = "button_RestartServer";
-            this.button_RestartServer.Size = new System.Drawing.Size(106, 23);
-            this.button_RestartServer.TabIndex = 10;
-            this.button_RestartServer.Text = "Restart Server";
-            this.button_RestartServer.UseVisualStyleBackColor = true;
-            this.button_RestartServer.Click += new System.EventHandler(this.button_RestartServer_Click);
-            // 
-            // hostname
-            // 
-            this.hostname.HeaderText = "hostname";
-            this.hostname.Name = "hostname";
-            this.hostname.ReadOnly = true;
-            this.hostname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // port
-            // 
-            this.port.HeaderText = "port";
-            this.port.MaxInputLength = 10;
-            this.port.Name = "port";
-            this.port.ReadOnly = true;
-            this.port.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.port.Width = 80;
-            // 
             // WebSite
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -272,6 +272,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WebSite";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Web管理";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.WebSite_Load);
