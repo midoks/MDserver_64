@@ -920,9 +920,9 @@ namespace MDserver
 
                         string c = _ReadContent(tplFile);
 
-                        c = c.Replace("{HOSTNAME}", hostname);
-                        c = c.Replace("{ROOTDIR}", root_dir.Replace(@"\", "/") + "/");
-                        c = c.Replace("{PORT}", port);
+                        c = c.Replace("{HOSTNAME}", hostname.Trim());
+                        c = c.Replace("{ROOTDIR}", root_dir.Trim());
+                        c = c.Replace("{PORT}", port.Trim());
 
                         if (System.IO.File.Exists(vhostDir + "own_" + hostname.Trim().Replace(".", "_") + ".conf")) {
                             continue;
@@ -1033,6 +1033,14 @@ namespace MDserver
                 System.IO.File.Delete(tV);
             }
 
+            //删除APACHE的日志
+            string apacheLogPath = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\logs\");
+            var apacheLogPathFiles = Directory.GetFiles(apacheLogPath, "tmp_*.log");
+            foreach (var logFile in apacheLogPathFiles)
+            {
+                System.IO.File.Delete(logFile);
+            }
+
             //删除HOSTS
             string hosts = @"C:\Windows\System32\drivers\etc\HOSTS";
             string hostsContent = _ReadContent(hosts);
@@ -1102,6 +1110,7 @@ namespace MDserver
             {
                 _clear_file_log(f);
             }
+            
         }
 
         //清楚文件

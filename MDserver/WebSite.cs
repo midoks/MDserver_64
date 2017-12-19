@@ -134,7 +134,7 @@ namespace MDserver
             domainList.Rows[index].Cells[0].Value = hostname;
             domainList.Rows[index].Cells[1].Value = port;
 
-            this.iniXml.addNode(hostname, "port", getRealValue(port));
+            this.iniXml.addNode(getRealValue(hostname), "port", getRealValue(port));
             this.iniXml.updateNode(index - 1, "root_dir", getRealValue(root_dir));
 
 
