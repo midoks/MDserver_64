@@ -304,6 +304,25 @@ namespace MDserver
             }
         }
 
+        //重新启动
+        public void restart()
+        {
+
+            bool ret = WStop_S(MD_ApacheName);
+            if (ret)
+            {
+                _stop_apache();
+
+                after_stop_SERVICE();
+
+                Thread.Sleep(3000);
+
+                _clear_record();
+                pre_start_SERVICE();
+                _start_Apache();
+            }
+        }
+
         private void php_list_click(object sender, EventArgs e)
         {
             foreach (MenuItem i in this.menuItem_php_list.MenuItems)
@@ -882,35 +901,66 @@ namespace MDserver
             //修改hosts
             string hosts = @"C:\Windows\System32\drivers\etc\HOSTS";
 
-            if (System.IO.File.Exists(tplFile)){
+            if (System.IO.File.Exists(tplFile))
+            {
                 string hostsContent = _ReadContent(hosts);
                 hostsContent = hostsContent.Trim();
 
                 string vhostDir = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost\");
-                foreach (XmlNode host in hostXml)
+                if (hostXml.HasChildNodes)
                 {
-                    string hostname = host.Attributes["name"].Value;
+                    ArrayList portList = new ArrayList();
 
-                    string port = host.Attributes["port"].Value;
-                    string root_dir = host.Attributes["root_dir"].Value;
+                    foreach (XmlNode host in hostXml)
+                    {
+                        string hostname = host.Attributes["name"].Value;
 
-                    string c = _ReadContent(tplFile);
+                        string port = host.Attributes["port"].Value;
+                        string root_dir = host.Attributes["root_dir"].Value;
 
-                    c = c.Replace("{HOSTNAME}", hostname);
-                    c = c.Replace("{ROOTDIR}", root_dir.Replace(@"\","/")+"/");
-                    c = c.Replace("{PORT}", port);
+                        string c = _ReadContent(tplFile);
 
-                    _WriteContent(vhostDir + "tmp_" + hostname.Replace(".", "_") + ".conf", c);
+                        c = c.Replace("{HOSTNAME}", hostname);
+                        c = c.Replace("{ROOTDIR}", root_dir.Replace(@"\", "/") + "/");
+                        c = c.Replace("{PORT}", port);
 
+                        //写入vhost
+                        _WriteContent(vhostDir + "tmp_" + hostname.Trim().Replace(".", "_") + ".conf", c);
 
-                    hostsContent += "\n127.0.0.1\t\t"+ hostname + "\t" + HOSTS_NOTES;
+                        //host组装
+                        hostsContent += "\n127.0.0.1\t\t" + hostname + "\t" + HOSTS_NOTES;
+
+                        //log(port);
+                        //监听端口组装
+                        if (port.Equals("80") || port.Equals("8080"))
+                        {
+
+                        }
+                        else
+                        {
+                            if (portList.IndexOf(port) == -1)
+                            {
+                                portList.Add(port);
+                            }
+                        }
+                    }
+
+                    string portContent = "";
+                    foreach (string portv in portList)
+                    {
+                        portContent += "Listen " + portv + "\r\n";
+                    }
+
+                    _WriteContent(vhostDir + "tmp_listen.conf", portContent);
+                }
+                else
+                {
+                    _WriteContent(vhostDir + "tmp_listen.conf", "");
                 }
 
                 _WriteContent(hosts, hostsContent);
-                log(hostsContent);
+                //log(hostsContent);
             }
-            
-            Thread.Sleep(500);
 
 
             //httpd.conf,my.ini,php.ini替换
@@ -982,12 +1032,12 @@ namespace MDserver
             //删除HOSTS
             string hosts = @"C:\Windows\System32\drivers\etc\HOSTS";
             string hostsContent = _ReadContent(hosts);
-           
+
             Regex reg = new Regex("(.*)" + HOSTS_NOTES);
-            hostsContent = reg.Replace(hostsContent,"");
+            hostsContent = reg.Replace(hostsContent, "");
             hostsContent = hostsContent.Trim();
             _WriteContent(hosts, hostsContent);
-            log(hostsContent);
+            //log(hostsContent);
 
 
             //apache2_4.dll 找到
@@ -1019,7 +1069,7 @@ namespace MDserver
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost",
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias"
             };
-            
+
             foreach (var conf_i in conf_v_list)
             {
                 var fhost = Directory.GetFiles(conf_i, "*.conf");
@@ -1095,7 +1145,7 @@ namespace MDserver
             string arg = "-k install -n " + MD_ApacheName;
             log(apache + " " + arg);
             Wcmd(apache + " " + arg);
-            Thread.Sleep(3000);
+
 
             //延迟执行
             System.Timers.Timer timer = new System.Timers.Timer(1500);
@@ -1107,6 +1157,8 @@ namespace MDserver
         private void _start_Apache_lazy(object sender, System.Timers.ElapsedEventArgs e)
         {
             WStart_S(MD_ApacheName);
+            //不可以点击启动按钮
+            button_start.Enabled = false;
         }
 
         //MySQL
@@ -1139,7 +1191,6 @@ namespace MDserver
 
             _stop_apache();
             after_stop_SERVICE();
-            this.button_start.Enabled = true;
 
             this.ini.WriteInteger("MDSERVER", "MD_RUN", 0);
             this.ini.WriteString("MDSERVER", "RUN_DIR", "");
@@ -1160,6 +1211,8 @@ namespace MDserver
             else
             {
                 Wstatus(MD_ApacheName + "已经停止!");
+                //可以点击启动按钮
+                button_start.Enabled = true;
             }
         }
 
@@ -1174,6 +1227,8 @@ namespace MDserver
                 string arg = "-k uninstall -n " + MD_ApacheName;
                 Wcmd(apache + " " + arg);
             }
+            //可以点击启动按钮
+            button_start.Enabled = true;
         }
 
         //停止mysql
@@ -1801,7 +1856,7 @@ namespace MDserver
         public bool _WriteContent(string path, string content)
         {
             bool ok = false;
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, System.Text.Encoding.Default);
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, System.Text.Encoding.UTF8);
             try
             {
                 sw.Write(content);

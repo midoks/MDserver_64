@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebSite));
             this.domainList = new System.Windows.Forms.DataGridView();
             this.groupList = new System.Windows.Forms.GroupBox();
+            this.buttonDel = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox_rootDir = new System.Windows.Forms.TextBox();
             this.buttonSelectDir = new System.Windows.Forms.Button();
@@ -42,8 +44,7 @@
             this.textBox_hostname = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonDel = new System.Windows.Forms.Button();
+            this.button_RestartServer = new System.Windows.Forms.Button();
             this.hostname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.domainList)).BeginInit();
@@ -66,7 +67,7 @@
             this.domainList.Name = "domainList";
             this.domainList.ReadOnly = true;
             this.domainList.RowTemplate.Height = 23;
-            this.domainList.Size = new System.Drawing.Size(241, 197);
+            this.domainList.Size = new System.Drawing.Size(286, 197);
             this.domainList.TabIndex = 0;
             this.domainList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.domainList_CellContentClick);
             // 
@@ -77,13 +78,38 @@
             this.groupList.Controls.Add(this.domainList);
             this.groupList.Location = new System.Drawing.Point(12, 12);
             this.groupList.Name = "groupList";
-            this.groupList.Size = new System.Drawing.Size(262, 257);
+            this.groupList.Size = new System.Drawing.Size(307, 257);
             this.groupList.TabIndex = 1;
             this.groupList.TabStop = false;
             this.groupList.Text = "List";
             // 
+            // buttonDel
+            // 
+            this.buttonDel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonDel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonDel.Location = new System.Drawing.Point(47, 223);
+            this.buttonDel.Name = "buttonDel";
+            this.buttonDel.Size = new System.Drawing.Size(28, 28);
+            this.buttonDel.TabIndex = 11;
+            this.buttonDel.Text = " -";
+            this.buttonDel.UseVisualStyleBackColor = true;
+            this.buttonDel.Click += new System.EventHandler(this.buttonDel_Click);
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonAdd.Location = new System.Drawing.Point(15, 223);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(28, 28);
+            this.buttonAdd.TabIndex = 10;
+            this.buttonAdd.Text = " +";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button_RestartServer);
             this.groupBox1.Controls.Add(this.textBox_rootDir);
             this.groupBox1.Controls.Add(this.buttonSelectDir);
             this.groupBox1.Controls.Add(this.buttonRootGo);
@@ -94,7 +120,7 @@
             this.groupBox1.Controls.Add(this.textBox_hostname);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(284, 12);
+            this.groupBox1.Location = new System.Drawing.Point(325, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(259, 257);
             this.groupBox1.TabIndex = 2;
@@ -205,29 +231,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Server Name:";
             // 
-            // buttonAdd
+            // button_RestartServer
             // 
-            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonAdd.Location = new System.Drawing.Point(15, 223);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(28, 28);
-            this.buttonAdd.TabIndex = 10;
-            this.buttonAdd.Text = " +";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // buttonDel
-            // 
-            this.buttonDel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonDel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonDel.Location = new System.Drawing.Point(47, 223);
-            this.buttonDel.Name = "buttonDel";
-            this.buttonDel.Size = new System.Drawing.Size(28, 28);
-            this.buttonDel.TabIndex = 11;
-            this.buttonDel.Text = " -";
-            this.buttonDel.UseVisualStyleBackColor = true;
-            this.buttonDel.Click += new System.EventHandler(this.buttonDel_Click);
+            this.button_RestartServer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_RestartServer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_RestartServer.Location = new System.Drawing.Point(15, 223);
+            this.button_RestartServer.Name = "button_RestartServer";
+            this.button_RestartServer.Size = new System.Drawing.Size(106, 23);
+            this.button_RestartServer.TabIndex = 10;
+            this.button_RestartServer.Text = "Restart Server";
+            this.button_RestartServer.UseVisualStyleBackColor = true;
+            this.button_RestartServer.Click += new System.EventHandler(this.button_RestartServer_Click);
             // 
             // hostname
             // 
@@ -249,7 +263,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 296);
+            this.ClientSize = new System.Drawing.Size(606, 301);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupList);
             this.ForeColor = System.Drawing.Color.Black;
@@ -286,6 +300,7 @@
         private System.Windows.Forms.TextBox textBox_rootDir;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonDel;
+        private System.Windows.Forms.Button button_RestartServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn hostname;
         private System.Windows.Forms.DataGridViewTextBoxColumn port;
     }

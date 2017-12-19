@@ -1,37 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
+using System.Threading;
 
 namespace MDserver
 {
     public partial class WebSite : Form
     {
         private static string BaseDir = System.AppDomain.CurrentDomain.BaseDirectory.Replace("\\", "/");
-        private System.Timers.Timer timer = new System.Timers.Timer(1000);
 
         private SystemXml iniXml;
         public MDserv mainUI;
+
+        //port总长度
+        private int PORTLEN = 10;
+        //域名长度
+        private int DOMAINLEN = 30;
 
         public WebSite()
         {
             InitializeComponent();
             this.iniXml = new SystemXml(BaseDir + "host.xml");
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         //设置为有一定
         public string setLenValue(string value, int len)
         {
             int vlen = value.Length;
-            if (len - vlen > 0)
+            int padLen = len - vlen;
+            this.mainUI.log(padLen.ToString() + ":");
+            if (padLen > 0)
             {
-                value = value.PadRight(len - vlen, ' ');
+                value = value.PadRight(padLen, ' ');
             }
             return value;
         }
@@ -57,8 +60,8 @@ namespace MDserver
                 this.domainList.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
 
-            string hostname = setLenValue("localhost", 30);
-            string port = setLenValue("80", 10);
+            string hostname = setLenValue("localhost", DOMAINLEN);
+            string port = setLenValue("80", PORTLEN);
             string root_dir = BaseDir + "www/htdocs";
 
             DataGridViewRow Row = new DataGridViewRow();
@@ -77,9 +80,11 @@ namespace MDserver
             {
                 DataGridViewRow Rt = new DataGridViewRow();
                 int t = domainList.Rows.Add(Rt);
-                domainList.Rows[t].Cells[0].Value = setLenValue(r_one.Attributes["name"].Value, 30);
-                domainList.Rows[t].Cells[1].Value = setLenValue(r_one.Attributes["port"].Value, 10);
+                domainList.Rows[t].Cells[0].Value = setLenValue(r_one.Attributes["name"].Value, DOMAINLEN);
+                domainList.Rows[t].Cells[1].Value = setLenValue(r_one.Attributes["port"].Value, PORTLEN);
 
+                //this.mainUI.log(domainList.Rows[t].Cells[0].Value+ ":");
+                //this.mainUI.log(domainList.Rows[t].Cells[1].Value + ":");
             }
 
         }
@@ -87,10 +92,7 @@ namespace MDserver
 
         private void domainList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
-            // System.Diagnostics.Debug.WriteLine("信息");
             int index = domainList.CurrentRow.Index;
-
 
             string hostname = domainList.Rows[index].Cells[0].Value.ToString();
             string port = domainList.Rows[index].Cells[1].Value.ToString();
@@ -103,7 +105,6 @@ namespace MDserver
 
                 string v = ch.Attributes["root_dir"].Value;
                 textBox_rootDir.Text = v;
-
             }
             else
             {
@@ -114,20 +115,6 @@ namespace MDserver
         }
 
 
-        private void domainList_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            System.Diagnostics.Debug.WriteLine("信r息");
-
-        }
-
-        private void domainList_CellEenter(object sender, DataGridViewCellEventArgs e)
-        {
-
-            System.Diagnostics.Debug.WriteLine("domainList_CellCenter");
-
-        }
-
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             int count = domainList.RowCount;
@@ -135,7 +122,7 @@ namespace MDserver
             DataGridViewRow Row = new DataGridViewRow();
             //domainList.RowHeadersWidth = 45;
 
-            string hostname = "tmp" + count.ToString() + ".com";
+            string hostname = Guid.NewGuid().ToString().Substring(0, 8) + ".com"; ;
             string port = "80";
 
             hostname = setLenValue(hostname, 30);
@@ -150,6 +137,9 @@ namespace MDserver
             this.iniXml.addNode(hostname, "port", getRealValue(port));
             this.iniXml.updateNode(index - 1, "root_dir", getRealValue(root_dir));
 
+
+            restart();
+
         }
 
         private void buttonDel_Click(object sender, EventArgs e)
@@ -159,6 +149,8 @@ namespace MDserver
             {
                 domainList.Rows.RemoveAt(index);
                 this.iniXml.removeNode(index - 1);
+
+                restart();
             }
             else
             {
@@ -178,49 +170,44 @@ namespace MDserver
                 string port = getRealValue(domainList.Rows[index].Cells[1].Value.ToString());
 
                 string root_dir = BaseDir + "www/htdocs";
-                if (index > 1)
+                if (index > 0)
                 {
                     XmlNode ch = this.iniXml.selectedNode(index - 1);
                     root_dir = ch.Attributes["root_dir"].Value.ToString();
                 }
 
-
                 string php_tmp = "tmp_" + Guid.NewGuid().ToString().Replace("-", "_") + ".php";
+                var cbool = this.mainUI._WriteContent(root_dir + "/" + php_tmp, "<?php phpinfo(); ?>");
+                if (cbool)
+                {
+                    System.Diagnostics.Process.Start("http://" + hostname + ":" + port + "/" + php_tmp);
 
-                this.mainUI._WriteContent(root_dir + "/" + php_tmp, "<?php phpinfo(); ?>");
 
-                Console.WriteLine(php_tmp);
-
-
-                System.Diagnostics.Process.Start("http://" + hostname + ":" + port + "/" + php_tmp);
-                int a = 123132;
-                timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-                timer.Enabled = false;
-
+                    Thread delfile = new Thread(() =>
+                    {
+                        Thread.Sleep(3000);
+                        //删除临时文件
+                        File.Delete(root_dir + "/" + php_tmp);
+                    });
+                    delfile.Start();
+                }
+                else
+                {
+                    MessageBox.Show("创建临时文件失败!");
+                }
             }
         }
-
-
-
-        private static void OnTimedEvent(object source, ElapsedEventArgs e)
-        {
-            Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
-        }
-
 
         private void buttonGo_Click(object sender, EventArgs e)
         {
             var ok = checkFunc();
             if (ok)
             {
-
                 int index = domainList.CurrentRow.Index;
                 string hostname = getRealValue(domainList.Rows[index].Cells[0].Value.ToString());
                 string port = getRealValue(domainList.Rows[index].Cells[1].Value.ToString());
 
                 System.Diagnostics.Process.Start("http://" + hostname + ":" + port + "/");
-
-
             }
         }
 
@@ -239,6 +226,8 @@ namespace MDserver
                         textBox_rootDir.Text = dir.SelectedPath;
                     }
                 }
+
+                restart();
             }
             else
             {
@@ -248,7 +237,6 @@ namespace MDserver
 
         private void buttonRootGo_Click(object sender, EventArgs e)
         {
-
             string dir = textBox_rootDir.Text;
             //dir = getDirPath(dir);
             if (Directory.Exists(dir))
@@ -265,17 +253,49 @@ namespace MDserver
         private void textBox_hostname_TextChanged(object sender, EventArgs e)
         {
             int index = domainList.CurrentRow.Index;
+            string conf_hostname;
+            string hostname = textBox_hostname.Text.Trim();
+
             if (index > 0)
             {
-                System.Diagnostics.Debug.WriteLine(index.ToString());
+                bool isRepeat = false;
 
-                domainList.Rows[index].Cells[0].Value = setLenValue(textBox_hostname.Text, 30);
-                this.iniXml.updateNode(index - 1, "name", textBox_hostname.Text);
+                //检查是否为空
+                if (hostname.Equals(""))
+                {
+                    MessageBox.Show("端口不能为空!!");
+                    textBox_hostname.Text = Guid.NewGuid().ToString().Substring(0, 8) + ".com";
+                    return;
+                }
+
+                //检查是否重复
+                XmlNode hostXml = this.iniXml.rootNode();
+                int hostIndex = 1;
+                foreach (XmlNode host in hostXml)
+                {
+                    conf_hostname = host.Attributes["name"].Value;
+                    
+                    if (hostname.Equals(conf_hostname) && index != hostIndex)
+                    {
+                        isRepeat = true;
+                        break;
+                    }
+                    hostIndex++;
+                }
+
+                if (isRepeat)
+                {
+                    MessageBox.Show("域名不要重复!!");
+                    textBox_hostname.Text = Guid.NewGuid().ToString().Substring(0, 8) + ".com";
+                    return;
+                }
+
+                domainList.Rows[index].Cells[0].Value = setLenValue(textBox_hostname.Text.Trim(), DOMAINLEN);
+                this.iniXml.updateNode(index - 1, "name", textBox_hostname.Text.Trim());
 
             }
             else
             {
-
                 if (textBox_hostname.Text == "localhost")
                 {
                 }
@@ -284,7 +304,6 @@ namespace MDserver
                     MessageBox.Show("localhost不可修改!");
                     textBox_hostname.Text = "localhost";
                 }
-
                 return;
             }
         }
@@ -292,52 +311,84 @@ namespace MDserver
         private void textBox_Port_TextChanged(object sender, EventArgs e)
         {
             int index = domainList.CurrentRow.Index;
+            string port = textBox_Port.Text;
             if (index > 0)
             {
-                domainList.Rows[index].Cells[1].Value = setLenValue(textBox_Port.Text, 10);
-                this.iniXml.updateNode(index - 1, "port", textBox_Port.Text);
-            }
-            else
-            {
 
-                if (textBox_Port.Text == "80")
+
+                if (port.Equals(""))
                 {
+                    MessageBox.Show("端口不能为空!!");
+                    textBox_Port.Text = "80";
+                    return;
+                }
+
+                int portInt = int.Parse(port);
+                if (portInt > 0 && portInt < 65536)
+                {
+                    textBox_Port.Text = portInt.ToString();
+                    port = textBox_Port.Text;
+                    domainList.Rows[index].Cells[1].Value = setLenValue(port, PORTLEN);
+                    this.iniXml.updateNode(index - 1, "port", textBox_Port.Text);
                 }
                 else
                 {
-                    MessageBox.Show("localhost不可修改!");
+                    MessageBox.Show("端口范围在0~65536之内");
                     textBox_Port.Text = "80";
                 }
 
-                return;
             }
-
+            else
+            {
+                if (port != "80")
+                {
+                    MessageBox.Show("localhost端口不可修改!");
+                    textBox_Port.Text = "80";
+                    return;
+                }
+            }
         }
 
 
         //私有方法
         public Boolean checkFunc()
         {
-
-            var isRun = !this.mainUI.button_start.Enabled;
+            bool isRun = !this.mainUI.button_start.Enabled;
+            int index = domainList.CurrentRow.Index;
 
             if (!isRun)
             {
                 MessageBox.Show("HTTP服务没有启动!!!");
                 return false;
+            }
+            //else if (index == 0) {
+            //    MessageBox.Show("localhost不可修改");
+            //    return false;
+            //}
 
-                int index = domainList.CurrentRow.Index;
-                if (index > 0)
-                {
+            return true;
+        }
 
-                }
-                else
+        public void restart()
+        {
+            var isRun = !this.mainUI.button_start.Enabled;
+            if (isRun)
+            {
+                DialogResult qa = MessageBox.Show("要想立即生效需要重新启动,是否重新启动!!!", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (qa == DialogResult.Yes)
                 {
-                    MessageBox.Show("localhost不可修改");
-                    return false;
+                    Thread re = new Thread(() =>
+                    {
+                        this.mainUI.restart();
+                    });
+                    re.Start();
                 }
             }
-            return true;
+        }
+
+        private void button_RestartServer_Click(object sender, EventArgs e)
+        {
+            restart();
         }
     }
 }
