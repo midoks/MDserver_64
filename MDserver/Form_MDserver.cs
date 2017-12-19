@@ -924,6 +924,10 @@ namespace MDserver
                         c = c.Replace("{ROOTDIR}", root_dir.Replace(@"\", "/") + "/");
                         c = c.Replace("{PORT}", port);
 
+                        if (System.IO.File.Exists(vhostDir + "own_" + hostname.Trim().Replace(".", "_") + ".conf")) {
+                            continue;
+                        }
+
                         //写入vhost
                         _WriteContent(vhostDir + "tmp_" + hostname.Trim().Replace(".", "_") + ".conf", c);
 
