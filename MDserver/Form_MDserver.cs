@@ -29,7 +29,7 @@ namespace MDserver
 {
     public partial class MDserv : Form
     {
-        //private static string version = "1.1.5";
+        //private static string version = "2.0.0";
         //PID 进程显示时钟
         private System.Timers.Timer timer = new System.Timers.Timer(3000);
 
@@ -85,7 +85,7 @@ namespace MDserver
             this.Closing += new CancelEventHandler(MDserv_Closing);
 
             //延迟执行
-            System.Timers.Timer timers = new System.Timers.Timer(500);
+            System.Timers.Timer timers = new System.Timers.Timer(200);
             timers.Elapsed += new System.Timers.ElapsedEventHandler(_MDserv_start);
             timers.Enabled = true;
             timers.AutoReset = false;
@@ -185,16 +185,19 @@ namespace MDserver
         {
             //检查原有的服务
             string[] service = { MD_ApacheName, MD_MySQL, MD_Redis };
-            System.Timers.Timer timer = new System.Timers.Timer(3000);
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
             foreach (string s in service)
             {
                 if (WServiceIsExisted(s) && !WQueryServiceIsStart(s))
                 {
-                    button_start.Enabled = false;
+
                     if (!WQueryServiceIsStart(s))
                     {
+
                         if (s == MD_ApacheName)
                         {
+                            button_start.Enabled = false;
+
                             radioButton_Apache.Checked = true;
                             WStart(MD_ApacheName);
 
@@ -211,6 +214,7 @@ namespace MDserver
                             timer.AutoReset = false;
                         }
                     }
+
                 }
 
                 //线程检查
@@ -702,15 +706,12 @@ namespace MDserver
 
         private void checkBox_MySQL_CheckedChanged(object sender, EventArgs e)
         {
-           
 
-            pre_start_SERVICE();
-            
             System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_mysql_status);
             timer.Enabled = true;
             timer.AutoReset = false;
-            
+
         }
 
         private void _mysql_status(object sender, System.Timers.ElapsedEventArgs e)
@@ -723,11 +724,14 @@ namespace MDserver
             {
                 if (checkBox_MySQL.Checked)
                 {
+                    pre_start_mysql();
                     _start_mysql();
                 }
                 else
                 {
+                    Wstatus("MySQL: 停止中...");
                     _stop_mysql();
+                    after_stop_msyql();
                 }
             }
             catch (Exception ex)
@@ -929,7 +933,8 @@ namespace MDserver
                         c = c.Replace("{ROOTDIR}", root_dir.Trim());
                         c = c.Replace("{PORT}", port.Trim());
 
-                        if (System.IO.File.Exists(vhostDir + "own_" + hostname.Trim().Replace(".", "_") + ".conf")) {
+                        if (System.IO.File.Exists(vhostDir + "own_" + hostname.Trim().Replace(".", "_") + ".conf"))
+                        {
                             continue;
                         }
 
@@ -972,10 +977,9 @@ namespace MDserver
             }
 
 
-            //httpd.conf,my.ini,php.ini替换
+            //httpd.conf,php.ini替换
             string[] conf = {
                 @"bin/"+ apache_dir + @"/conf/httpd.conf",
-                @"bin/MySQL/my.ini",
                 @"bin/PHP/"+ php_dir + @"/php.ini"};
 
             //apache2_4.dll 找到
@@ -1020,6 +1024,29 @@ namespace MDserver
             }
         }
 
+        private void pre_start_mysql()
+        {
+            string[] conf = { @"bin/MySQL/my.ini" };
+            foreach (string i in conf)
+            {
+                string r = _ReadContent(BaseDir + i);
+                r = r.Replace("MD:/", BaseDir);
+                _WriteContent(BaseDir + i, r, System.Text.Encoding.ASCII);
+            }
+        }
+
+        private void after_stop_msyql()
+        {
+            string[] conf = { @"bin/MySQL/my.ini" };
+
+            foreach (string i in conf)
+            {
+                string r = _ReadContent(BaseDir + i);
+                r = r.Replace(BaseDir, "MD:/");
+                _WriteContent(BaseDir + i, r, System.Text.Encoding.ASCII);
+            }
+        }
+
         //停止后配置恢复原状
         private void after_stop_SERVICE()
         {
@@ -1061,12 +1088,10 @@ namespace MDserver
             string[] php_apache_dll_list = Directory.GetFiles(php_dir_pos, "*apache2_4.dll");
             string php_apache_dll = System.IO.Path.GetFileName(php_apache_dll_list[0]);
 
-            //httpd.conf,my.ini,php.ini替换
+            //httpd.conf,php.ini替换
             string[] conf = {
                 @"bin/" +  apache_dir + "/conf/httpd.conf",
-                @"bin/MySQL/my.ini",
                 @"bin/PHP/"+ php_dir +@"/php.ini"};
-
 
             foreach (string i in conf)
             {
@@ -1115,7 +1140,7 @@ namespace MDserver
             {
                 _clear_file_log(f);
             }
-            
+
         }
 
         //清楚文件
@@ -1163,7 +1188,7 @@ namespace MDserver
             string arg = "-k install -n " + MD_ApacheName;
             log(apache + " " + arg);
             Wcmd(apache + " " + arg);
-        
+
             Thread.Sleep(3000);
 
             //延迟执行
@@ -1274,6 +1299,10 @@ namespace MDserver
             {
                 WUninstall(MD_MySQL);
             }
+            else
+            {
+                Wstatus("MySQL: 停止失败!");
+            }
         }
 
 
@@ -1295,7 +1324,8 @@ namespace MDserver
         //打开数据管理地址
         private void button_MySQL_Click(object sender, EventArgs e)
         {
-            if (checkHttp()) {
+            if (checkHttp())
+            {
                 System.Diagnostics.Process.Start("http://127.0.0.1/phpMyAdmin");
             }
         }
@@ -1322,7 +1352,7 @@ namespace MDserver
             {
                 System.Diagnostics.Process.Start("http://127.0.0.1/memadmin");
             }
-            
+
         }
 
         /// <summary>
@@ -1336,7 +1366,7 @@ namespace MDserver
             {
                 System.Diagnostics.Process.Start("http://127.0.0.1/phpRedisAdmin");
             }
-            
+
         }
 
         /// <summary>
@@ -1892,7 +1922,7 @@ namespace MDserver
         public bool _WriteContent(string path, string content)
         {
             bool ok = false;
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, System.Text.Encoding.UTF8);
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, System.Text.Encoding.UTF8); //System.Text.Encoding.UTF8
             try
             {
                 sw.Write(content);
@@ -1902,6 +1932,22 @@ namespace MDserver
             catch { }
             return ok;
         }
+
+        public bool _WriteContent(string path, string content, Encoding code)
+        {
+            bool ok = false;
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, code);
+            try
+            {
+                sw.Write(content);
+                ok = true;
+                sw.Close();
+            }
+            catch { }
+            return ok;
+        }
+
+
 
         //读取内容
         private string _ReadContent(string path)
