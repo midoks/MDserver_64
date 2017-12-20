@@ -932,7 +932,7 @@ namespace MDserver
                         _WriteContent(vhostDir + "tmp_" + hostname.Trim().Replace(".", "_") + ".conf", c);
 
                         //host组装
-                        hostsContent += "\n127.0.0.1\t\t" + hostname + "\t" + HOSTS_NOTES;
+                        hostsContent += "\r\n127.0.0.1\t\t" + hostname + "\t" + HOSTS_NOTES;
 
                         //log(port);
                         //监听端口组装
