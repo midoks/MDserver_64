@@ -105,7 +105,9 @@ http://jingyan.baidu.com/article/4dc408488ff783c8d946f1e8.html
 ### 截图
 
 - Main
+
 [![截图](/images/screen_1.png)](/images/screen_2.png)
 
 - Web管理
+
 [![截图](/images/screen_2.png)](/images/screen_2.png)
