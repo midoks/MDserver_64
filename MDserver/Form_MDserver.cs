@@ -702,10 +702,15 @@ namespace MDserver
 
         private void checkBox_MySQL_CheckedChanged(object sender, EventArgs e)
         {
+           
+
+            pre_start_SERVICE();
+            
             System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_mysql_status);
             timer.Enabled = true;
             timer.AutoReset = false;
+            
         }
 
         private void _mysql_status(object sender, System.Timers.ElapsedEventArgs e)
@@ -1158,7 +1163,8 @@ namespace MDserver
             string arg = "-k install -n " + MD_ApacheName;
             log(apache + " " + arg);
             Wcmd(apache + " " + arg);
-
+        
+            Thread.Sleep(3000);
 
             //延迟执行
             System.Timers.Timer timer = new System.Timers.Timer(1500);
@@ -1289,14 +1295,20 @@ namespace MDserver
         //打开数据管理地址
         private void button_MySQL_Click(object sender, EventArgs e)
         {
-            if (WQueryServiceIsStart(MD_ApacheName))
-            {
+            if (checkHttp()) {
                 System.Diagnostics.Process.Start("http://127.0.0.1/phpMyAdmin");
             }
-            else
+        }
+
+        public Boolean checkHttp()
+        {
+            bool isRun = !button_start.Enabled;
+            if (!isRun)
             {
-                MessageBox.Show("尚未开启服务!!!");
+                MessageBox.Show("HTTP服务没有启动!!!");
+                return false;
             }
+            return true;
         }
 
         /// <summary>
@@ -1306,7 +1318,11 @@ namespace MDserver
         /// <param name="e"></param>
         private void button_memcached_admin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://127.0.0.1/memadmin");
+            if (checkHttp())
+            {
+                System.Diagnostics.Process.Start("http://127.0.0.1/memadmin");
+            }
+            
         }
 
         /// <summary>
@@ -1316,7 +1332,11 @@ namespace MDserver
         /// <param name="e"></param>
         private void button_redis_admin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://127.0.0.1/phpRedisAdmin");
+            if (checkHttp())
+            {
+                System.Diagnostics.Process.Start("http://127.0.0.1/phpRedisAdmin");
+            }
+            
         }
 
         /// <summary>
@@ -1326,7 +1346,10 @@ namespace MDserver
         /// <param name="e"></param>
         private void button_mongo_admin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://127.0.0.1/phpMongodb");
+            if (checkHttp())
+            {
+                System.Diagnostics.Process.Start("http://127.0.0.1/phpMongodb");
+            }
         }
 
 
