@@ -22,14 +22,14 @@ using IWshRuntimeLibrary;
 
 //self class
 using MDserver;
-
-
+using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace MDserver
 {
     public partial class MDserv : Form
     {
-        //private static string version = "1.1.5";
+        //private static string version = "2.0.0";
         //PID 进程显示时钟
         private System.Timers.Timer timer = new System.Timers.Timer(3000);
 
@@ -68,26 +68,30 @@ namespace MDserver
         private static string MD_MongoDB = "MDserver-MongoDB";
 
         //默认php版本
-        private static string PHP_VERSION = "php5.5";
+        private static string PHP_VERSION = "php55";
+
+        private static string HOSTS_NOTES = "#MDserver Hosts Don`t Remove and Change";
 
         private SystemINI ini;
+        private SystemXml iniXml;
 
         public MDserv()
         {
 
             InitializeComponent();
             this.ini = new SystemINI(BaseDir + "md.ini");
+            this.iniXml = new SystemXml(BaseDir + "host.xml");
             //拦截标题栏的关闭事件
             this.Closing += new CancelEventHandler(MDserv_Closing);
 
             //延迟执行
-            System.Timers.Timer timers = new System.Timers.Timer(500);
+            System.Timers.Timer timers = new System.Timers.Timer(200);
             timers.Elapsed += new System.Timers.ElapsedEventHandler(_MDserv_start);
             timers.Enabled = true;
             timers.AutoReset = false;
             Control.CheckForIllegalCrossThreadCalls = false;
 
-            
+
             addPHPMenulist();
         }
 
@@ -181,16 +185,19 @@ namespace MDserver
         {
             //检查原有的服务
             string[] service = { MD_ApacheName, MD_MySQL, MD_Redis };
-            System.Timers.Timer timer = new System.Timers.Timer(3000);
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
             foreach (string s in service)
             {
                 if (WServiceIsExisted(s) && !WQueryServiceIsStart(s))
                 {
-                    button_start.Enabled = false;
+
                     if (!WQueryServiceIsStart(s))
                     {
+
                         if (s == MD_ApacheName)
                         {
+                            button_start.Enabled = false;
+
                             radioButton_Apache.Checked = true;
                             WStart(MD_ApacheName);
 
@@ -205,8 +212,9 @@ namespace MDserver
                             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_mysql_lazy);
                             timer.Enabled = true;
                             timer.AutoReset = false;
-                       } 
+                        }
                     }
+
                 }
 
                 //线程检查
@@ -238,7 +246,8 @@ namespace MDserver
             }
 
             //MD_MySQL
-            if (WQueryServiceIsStart(MD_MySQL)) {
+            if (WQueryServiceIsStart(MD_MySQL))
+            {
                 checkBox_MySQL.Checked = true;
             }
 
@@ -270,7 +279,8 @@ namespace MDserver
         }
 
         //添加PHP列表
-        private void addPHPMenulist() {
+        private void addPHPMenulist()
+        {
             //查看PHP版本
             string php_list = BaseDir.Replace("/", "\\") + @"bin\PHP";
             //当前默认php版本
@@ -286,7 +296,8 @@ namespace MDserver
                 _pversion.Index = 1;
                 _pversion.Click += new System.EventHandler(this.php_list_click);
 
-                if(_pvn.Equals(php_cver)){
+                if (_pvn.Equals(php_cver))
+                {
                     _pversion.Checked = true;
                 }
 
@@ -297,11 +308,32 @@ namespace MDserver
             }
         }
 
-        private void php_list_click(object sender, EventArgs e){
-            foreach (MenuItem i in this.menuItem_php_list.MenuItems) {
+        //重新启动
+        public void restart()
+        {
+
+            bool ret = WStop_S(MD_ApacheName);
+            if (ret)
+            {
+                _stop_apache();
+
+                after_stop_SERVICE();
+
+                Thread.Sleep(3000);
+
+                _clear_record();
+                pre_start_SERVICE();
+                _start_Apache();
+            }
+        }
+
+        private void php_list_click(object sender, EventArgs e)
+        {
+            foreach (MenuItem i in this.menuItem_php_list.MenuItems)
+            {
                 i.Checked = false;
             }
-            
+
             MenuItem pitem = (MenuItem)sender;
             pitem.Checked = true;
 
@@ -322,7 +354,7 @@ namespace MDserver
                     }
                     after_stop_SERVICE();
                     this.ini.WriteString("MDSERVER", "PHP_DIR", pitem.Text);
-       
+
 
                     Thread.Sleep(3000);
                     //this.PHPCurlFixAndPath(pitem.Text);
@@ -330,18 +362,19 @@ namespace MDserver
                     pre_start_SERVICE();
                     _start_Apache();
                 }
-                else 
+                else
                 {
-                    this.after_stop_SERVICE();  
+                    this.after_stop_SERVICE();
                 }
             }
-            else 
+            else
             {
                 this.ini.WriteString("MDSERVER", "PHP_DIR", pitem.Text);
             }
         }
 
-        private void PHPCurlFixAndPath(string s) {
+        private void PHPCurlFixAndPath(string s)
+        {
 
 
             string php_list = BaseDir.Replace("/", "\\") + @"bin\PHP";
@@ -354,9 +387,12 @@ namespace MDserver
             ArrayList new_list = new ArrayList();
             foreach (string i in list)
             {
-                if(i == php_pos_s){
+                if (i == php_pos_s)
+                {
                     continue;
-                } else if(i==php_pos_m){
+                }
+                else if (i == php_pos_m)
+                {
                     continue;
                 }
                 new_list.Add(i);
@@ -364,10 +400,11 @@ namespace MDserver
             }
 
             string t = "";
-            foreach (string i2 in new_list) {
-                t += i2 +";";
+            foreach (string i2 in new_list)
+            {
+                t += i2 + ";";
             }
- 
+
             //设置Path
             System.Environment.SetEnvironmentVariable("PATH", t + php_pos_m + ";");
 
@@ -415,7 +452,8 @@ namespace MDserver
             Wstatus("欢迎使用MDsever(PHP开发环境)...");
             listBox_listen_init();
 
-            if (checkedIsHasSelfRun()) {
+            if (checkedIsHasSelfRun())
+            {
                 MessageBox.Show("已经在运行了!!!");
                 Application.Exit();
             }
@@ -426,7 +464,8 @@ namespace MDserver
         }
 
         //检查是自己已经运行了
-        private bool checkedIsHasSelfRun() {
+        private bool checkedIsHasSelfRun()
+        {
             string cmdtext = "tasklist | findstr MDserver.exe";
             Process Tcmd = new Process();
             Tcmd.StartInfo.FileName = "cmd.exe";//设定程序名
@@ -473,7 +512,7 @@ namespace MDserver
         {
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
             string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
-            string httpd_conf = BaseDir + @"bin\"+ apache_dir + @"\conf\httpd.conf";
+            string httpd_conf = BaseDir + @"bin\" + apache_dir + @"\conf\httpd.conf";
             Wcmd_Exe(vim, httpd_conf);
         }
 
@@ -482,7 +521,7 @@ namespace MDserver
         {
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
             string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
-            string httpd_log = BaseDir + @"bin\"+ apache_dir + @"\logs\access.log";
+            string httpd_log = BaseDir + @"bin\" + apache_dir + @"\logs\access.log";
             Wcmd_Exe(vim, httpd_log);
         }
 
@@ -491,7 +530,7 @@ namespace MDserver
         {
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
             string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
-            string httpd_log = BaseDir + @"bin\" + apache_dir +  @"\logs\error.log";
+            string httpd_log = BaseDir + @"bin\" + apache_dir + @"\logs\error.log";
             Wcmd_Exe(vim, httpd_log);
         }
 
@@ -519,7 +558,7 @@ namespace MDserver
             string php_dir = this.ini.ReadString(@"MDSERVER", @"PHP_DIR", PHP_VERSION);
 
             string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
-            string php = BaseDir + @"bin\PHP\"+ php_dir + @"\php.ini";
+            string php = BaseDir + @"bin\PHP\" + php_dir + @"\php.ini";
             Wcmd_Exe(vim, php);
         }
 
@@ -528,8 +567,8 @@ namespace MDserver
         {
             string dir_E = "explorer.exe";
             string php_dir = this.ini.ReadString(@"MDSERVER", @"PHP_DIR", PHP_VERSION);
-            string dir = BaseDir.Replace("/", "\\")+ @"bin\PHP\" + php_dir + @"\ext";
-            Wcmd_Exe(dir_E, dir); 
+            string dir = BaseDir.Replace("/", "\\") + @"bin\PHP\" + php_dir + @"\ext";
+            Wcmd_Exe(dir_E, dir);
         }
 
         //www/htdocs
@@ -553,7 +592,7 @@ namespace MDserver
         //帮助信息
         private void menuItem_help_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://midoks.duapp.com/p/mdserver.html");
+            System.Diagnostics.Process.Start("http://midoks.cachecha.com/2014/09/30/mdserver.html");
         }
 
 
@@ -586,6 +625,14 @@ namespace MDserver
         //修改host
         private void button_mod_host_Click(object sender, EventArgs e)
         {
+
+            WebSite ws = new WebSite();
+            ws.mainUI = this;
+            ws.ShowDialog();
+        }
+
+        private void button_host_Click(object sender, EventArgs e)
+        {
             string vim = BaseDir + @"tool\Vim\vim73\gvim.exe";
             string path = @"C:\Windows\System32\drivers\etc\hosts";
             System.Diagnostics.Process.Start(vim, path);
@@ -598,9 +645,9 @@ namespace MDserver
             if (timer.Enabled)
             {
                 ArrayList str = new ArrayList();
-                string[] nn = { 
+                string[] nn = {
                     "MDserver", "memcached","mongod",
-                    "redis","mysql","php", "httpd" 
+                    "redis","mysql","php", "httpd"
                 };
                 foreach (string i in nn)
                 {
@@ -659,10 +706,12 @@ namespace MDserver
 
         private void checkBox_MySQL_CheckedChanged(object sender, EventArgs e)
         {
+
             System.Timers.Timer timer = new System.Timers.Timer(1000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_mysql_status);
             timer.Enabled = true;
             timer.AutoReset = false;
+
         }
 
         private void _mysql_status(object sender, System.Timers.ElapsedEventArgs e)
@@ -675,9 +724,14 @@ namespace MDserver
             {
                 if (checkBox_MySQL.Checked)
                 {
+                    pre_start_mysql();
                     _start_mysql();
-                } else {
+                }
+                else
+                {
+                    Wstatus("MySQL: 停止中...");
                     _stop_mysql();
+                    after_stop_msyql();
                 }
             }
             catch (Exception ex)
@@ -761,7 +815,8 @@ namespace MDserver
                 else
                 {
                     bool ret = WStop_S(MD_MongoDB);
-                    if(ret){
+                    if (ret)
+                    {
                         Wcmd_Exe(mdir_Exe, @" --logpath " + mdir + @"log\log.txt --dbpath " + mdir + @"data --serviceName " + MD_MongoDB + " --remove");
                     }
                 }
@@ -801,7 +856,8 @@ namespace MDserver
                 else
                 {
                     bool ret = WStop_S(MD_Redis);
-                    if(ret){
+                    if (ret)
+                    {
                         Wcmd_Exe(mdir_Exe, " --service-uninstall " + mdir + @"redis.conf --service-name " + MD_Redis);
                     }
                 }
@@ -842,14 +898,88 @@ namespace MDserver
         //启动服务之前的初始化配置
         private void pre_start_SERVICE()
         {
+
+
             string php_dir = this.ini.ReadString(@"MDSERVER", @"PHP_DIR", PHP_VERSION);
             string php_dir_pos = BaseDir + "bin/PHP/" + php_dir;
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
-            //httpd.conf,my.ini,php.ini替换
-            string[] conf = { 
+            //make apache vhost conf
+            XmlNode hostXml = this.iniXml.rootNode();
+            string tplFile = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost\host.tpl");
+            //修改hosts
+            string hosts = @"C:\Windows\System32\drivers\etc\HOSTS";
+
+            if (System.IO.File.Exists(tplFile))
+            {
+                string hostsContent = _ReadContent(hosts);
+                hostsContent = hostsContent.Trim();
+
+                string vhostDir = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost\");
+                if (hostXml.HasChildNodes)
+                {
+                    ArrayList portList = new ArrayList();
+
+                    foreach (XmlNode host in hostXml)
+                    {
+                        string hostname = host.Attributes["name"].Value;
+
+                        string port = host.Attributes["port"].Value;
+                        string root_dir = host.Attributes["root_dir"].Value;
+
+                        string c = _ReadContent(tplFile);
+
+                        c = c.Replace("{HOSTNAME}", hostname.Trim());
+                        c = c.Replace("{ROOTDIR}", root_dir.Trim());
+                        c = c.Replace("{PORT}", port.Trim());
+
+                        if (System.IO.File.Exists(vhostDir + "own_" + hostname.Trim().Replace(".", "_") + ".conf"))
+                        {
+                            continue;
+                        }
+
+                        //写入vhost
+                        _WriteContent(vhostDir + "tmp_" + hostname.Trim().Replace(".", "_") + ".conf", c);
+
+                        //host组装
+                        hostsContent += "\r\n127.0.0.1\t\t" + hostname + "\t" + HOSTS_NOTES;
+
+                        //log(port);
+                        //监听端口组装
+                        if (port.Equals("80") || port.Equals("8080"))
+                        {
+
+                        }
+                        else
+                        {
+                            if (portList.IndexOf(port) == -1)
+                            {
+                                portList.Add(port);
+                            }
+                        }
+                    }
+
+                    string portContent = "";
+                    foreach (string portv in portList)
+                    {
+                        portContent += "Listen " + portv + "\r\n";
+                    }
+
+                    _WriteContent(vhostDir + "tmp_listen.conf", portContent);
+                }
+                else
+                {
+                    _WriteContent(vhostDir + "tmp_listen.conf", "");
+                }
+
+                _WriteContent(hosts, hostsContent);
+                //log(hostsContent);
+            }
+
+
+            //httpd.conf,php.ini替换
+            string[] conf = {
                 @"bin/"+ apache_dir + @"/conf/httpd.conf",
-                @"bin/MySQL/my.ini",
                 @"bin/PHP/"+ php_dir + @"/php.ini"};
 
             //apache2_4.dll 找到
@@ -875,7 +1005,7 @@ namespace MDserver
             }
 
             //conf替换
-            string[] conf_v_list = { 
+            string[] conf_v_list = {
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost",
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias"
             };
@@ -894,25 +1024,74 @@ namespace MDserver
             }
         }
 
+        private void pre_start_mysql()
+        {
+            string[] conf = { @"bin/MySQL/my.ini" };
+            foreach (string i in conf)
+            {
+                string r = _ReadContent(BaseDir + i);
+                r = r.Replace("MD:/", BaseDir);
+                _WriteContent(BaseDir + i, r, System.Text.Encoding.ASCII);
+            }
+        }
+
+        private void after_stop_msyql()
+        {
+            string[] conf = { @"bin/MySQL/my.ini" };
+
+            foreach (string i in conf)
+            {
+                string r = _ReadContent(BaseDir + i);
+                r = r.Replace(BaseDir, "MD:/");
+                _WriteContent(BaseDir + i, r, System.Text.Encoding.ASCII);
+            }
+        }
+
         //停止后配置恢复原状
         private void after_stop_SERVICE()
         {
 
-            
+
             string php_dir = this.ini.ReadString(@"MDSERVER", @"PHP_DIR", PHP_VERSION);
             string php_dir_pos = BaseDir + "bin/PHP/" + php_dir;
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
+
+            //删除自动生成的配置（apache vhost conf ）
+            string vhostDir = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost\");
+            var tmpVhost = Directory.GetFiles(vhostDir, "tmp_*.conf");
+            foreach (var tV in tmpVhost)
+            {
+                System.IO.File.Delete(tV);
+            }
+
+            //删除APACHE的日志
+            string apacheLogPath = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\logs\");
+            var apacheLogPathFiles = Directory.GetFiles(apacheLogPath, "tmp_*.log");
+            foreach (var logFile in apacheLogPathFiles)
+            {
+                System.IO.File.Delete(logFile);
+            }
+
+            //删除HOSTS
+            string hosts = @"C:\Windows\System32\drivers\etc\HOSTS";
+            string hostsContent = _ReadContent(hosts);
+
+            Regex reg = new Regex("(.*)" + HOSTS_NOTES);
+            hostsContent = reg.Replace(hostsContent, "");
+            hostsContent = hostsContent.Trim();
+            _WriteContent(hosts, hostsContent);
+            //log(hostsContent);
+
+
             //apache2_4.dll 找到
             string[] php_apache_dll_list = Directory.GetFiles(php_dir_pos, "*apache2_4.dll");
             string php_apache_dll = System.IO.Path.GetFileName(php_apache_dll_list[0]);
-     
-            //httpd.conf,my.ini,php.ini替换
-            string[] conf = { 
-                @"bin/" +  apache_dir + "/conf/httpd.conf",
-                @"bin/MySQL/my.ini",
-                @"bin/PHP/"+ php_dir +@"/php.ini"};
 
+            //httpd.conf,php.ini替换
+            string[] conf = {
+                @"bin/" +  apache_dir + "/conf/httpd.conf",
+                @"bin/PHP/"+ php_dir +@"/php.ini"};
 
             foreach (string i in conf)
             {
@@ -928,7 +1107,7 @@ namespace MDserver
             }
 
             //conf替换
-            string[] conf_v_list = { 
+            string[] conf_v_list = {
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost",
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias"
             };
@@ -952,7 +1131,7 @@ namespace MDserver
         {
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
-            string[] file = { 
+            string[] file = {
                 BaseDir + @"bin\"+ apache_dir + @"\logs\access.log",
                 BaseDir + @"bin\" + apache_dir + @"\logs\error.log",
             };
@@ -961,12 +1140,7 @@ namespace MDserver
             {
                 _clear_file_log(f);
             }
-            //__Delete(BaseDir + @"bin\Nginx\myapp.err.log");
-            //__Delete(BaseDir + @"bin\Nginx\myapp.err.log.old");
-            //__Delete(BaseDir + @"bin\Nginx\myapp.out.log");
-            //__Delete(BaseDir + @"bin\Nginx\myapp.out.log.old");
-            //__Delete(BaseDir + @"bin\Nginx\myapp.wrapper.log");
-            //__Delete(BaseDir + @"bin\Nginx\myapp.xml");
+
         }
 
         //清楚文件
@@ -1014,8 +1188,9 @@ namespace MDserver
             string arg = "-k install -n " + MD_ApacheName;
             log(apache + " " + arg);
             Wcmd(apache + " " + arg);
+
             Thread.Sleep(3000);
-            
+
             //延迟执行
             System.Timers.Timer timer = new System.Timers.Timer(1500);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(_start_Apache_lazy);
@@ -1026,6 +1201,8 @@ namespace MDserver
         private void _start_Apache_lazy(object sender, System.Timers.ElapsedEventArgs e)
         {
             WStart_S(MD_ApacheName);
+            //不可以点击启动按钮
+            button_start.Enabled = false;
         }
 
         //MySQL
@@ -1058,18 +1235,17 @@ namespace MDserver
 
             _stop_apache();
             after_stop_SERVICE();
-            this.button_start.Enabled = true;
 
             this.ini.WriteInteger("MDSERVER", "MD_RUN", 0);
             this.ini.WriteString("MDSERVER", "RUN_DIR", "");
         }
-        
+
 
         //停止卸载Apache
         private void _stop_apache()
         {
             if (WServiceIsExisted(MD_ApacheName))
-            {  
+            {
                 //延迟执行
                 System.Timers.Timer timer = new System.Timers.Timer(1000);
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(_stop_apache_lazy);
@@ -1079,6 +1255,8 @@ namespace MDserver
             else
             {
                 Wstatus(MD_ApacheName + "已经停止!");
+                //可以点击启动按钮
+                button_start.Enabled = true;
             }
         }
 
@@ -1093,6 +1271,8 @@ namespace MDserver
                 string arg = "-k uninstall -n " + MD_ApacheName;
                 Wcmd(apache + " " + arg);
             }
+            //可以点击启动按钮
+            button_start.Enabled = true;
         }
 
         //停止mysql
@@ -1103,7 +1283,7 @@ namespace MDserver
             {
                 //string installName = dir + @"bin\mysqld " + "remove " + MD_MySQL;
                 //Wcmd(installName);
-               
+
                 //延迟执行
                 System.Timers.Timer timer = new System.Timers.Timer(500);
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(_stop_mysql_lazy);
@@ -1119,8 +1299,12 @@ namespace MDserver
             {
                 WUninstall(MD_MySQL);
             }
+            else
+            {
+                Wstatus("MySQL: 停止失败!");
+            }
         }
-       
+
 
         /**
          *  小工具配置
@@ -1140,14 +1324,21 @@ namespace MDserver
         //打开数据管理地址
         private void button_MySQL_Click(object sender, EventArgs e)
         {
-            if (WQueryServiceIsStart(MD_ApacheName))
+            if (checkHttp())
             {
                 System.Diagnostics.Process.Start("http://127.0.0.1/phpMyAdmin");
             }
-            else
+        }
+
+        public Boolean checkHttp()
+        {
+            bool isRun = !button_start.Enabled;
+            if (!isRun)
             {
-                MessageBox.Show("尚未开启服务!!!");
+                MessageBox.Show("HTTP服务没有启动!!!");
+                return false;
             }
+            return true;
         }
 
         /// <summary>
@@ -1157,7 +1348,11 @@ namespace MDserver
         /// <param name="e"></param>
         private void button_memcached_admin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://127.0.0.1/memadmin");
+            if (checkHttp())
+            {
+                System.Diagnostics.Process.Start("http://127.0.0.1/memadmin");
+            }
+
         }
 
         /// <summary>
@@ -1167,7 +1362,11 @@ namespace MDserver
         /// <param name="e"></param>
         private void button_redis_admin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://127.0.0.1/phpRedisAdmin");
+            if (checkHttp())
+            {
+                System.Diagnostics.Process.Start("http://127.0.0.1/phpRedisAdmin");
+            }
+
         }
 
         /// <summary>
@@ -1177,7 +1376,10 @@ namespace MDserver
         /// <param name="e"></param>
         private void button_mongo_admin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://127.0.0.1/phpMongodb");
+            if (checkHttp())
+            {
+                System.Diagnostics.Process.Start("http://127.0.0.1/phpMongodb");
+            }
         }
 
 
@@ -1257,7 +1459,7 @@ namespace MDserver
         private void button_WinCacheGrind_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(BaseDir.Replace("/", "\\") + @"tool\WinCacheGrind\WinCacheGrind.exe");
-            System.Diagnostics.Process.Start(BaseDir.Replace("/","\\") + @"tool\kcachegrind\kcachegrind.exe");
+            System.Diagnostics.Process.Start(BaseDir.Replace("/", "\\") + @"tool\kcachegrind\kcachegrind.exe");
             //string dir_E = "explorer.exe";
             //string dir = BaseDir + @"tool/kcachegrind/kcachegrind";
             //Wcmd_Exe(dir_E, dir.Replace("/", "\\"));
@@ -1288,7 +1490,7 @@ namespace MDserver
         {
             bool ok = false;
             RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);//打开注册表子项
-        
+
             if (key == null) { }
             else if (exeName != "")
             {
@@ -1615,7 +1817,9 @@ namespace MDserver
                         {
                             Wstatus(serviceName + "启动成功!!!");
                             return true;
-                        } if (i == 19) {
+                        }
+                        if (i == 19)
+                        {
                             Wstatus(serviceName + "启动失败!!!");
                         }
                         service.Refresh();
@@ -1651,7 +1855,9 @@ namespace MDserver
                         {
                             Wstatus(serviceName + "停止成功!!!");
                             return true;
-                        } if (i == 19) {
+                        }
+                        if (i == 19)
+                        {
                             Wstatus(serviceName + "停止失败!!!");
                         }
                         service.Refresh();
@@ -1713,10 +1919,10 @@ namespace MDserver
         }
 
         //写入内容
-        private bool _WriteContent(string path, string content)
+        public bool _WriteContent(string path, string content)
         {
             bool ok = false;
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, System.Text.Encoding.Default);
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, System.Text.Encoding.UTF8); //System.Text.Encoding.UTF8
             try
             {
                 sw.Write(content);
@@ -1726,6 +1932,22 @@ namespace MDserver
             catch { }
             return ok;
         }
+
+        public bool _WriteContent(string path, string content, Encoding code)
+        {
+            bool ok = false;
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false, code);
+            try
+            {
+                sw.Write(content);
+                ok = true;
+                sw.Close();
+            }
+            catch { }
+            return ok;
+        }
+
+
 
         //读取内容
         private string _ReadContent(string path)
@@ -1792,13 +2014,13 @@ namespace MDserver
         }
 
         private void menuItem_apache_Click(object sender, EventArgs e)
-        {}
+        { }
 
         private void groupBox_tool_Enter(object sender, EventArgs e)
         {
 
         }
 
-       
+
     }
 }

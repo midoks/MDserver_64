@@ -35,8 +35,8 @@ namespace MDserver
                     sw.Write("#MDserver配置文件,请不随意修改\r\n");
                     sw.Write("[MDSERVER]\r\n");
                     sw.Write("#运行PHP版本新,你可以其他PHP版本,复制到bin目下填写文件名字\r\n");
-                    sw.Write("#例如PHP5.4\r\n");
-                    sw.Write("PHP_DIR=php5.5\r\n");
+                    sw.Write("#例如php55\r\n");
+                    sw.Write("PHP_DIR=php55\r\n");
                     sw.Write("#运行apache的目录地址\r\n");
                     sw.Write("APACHE_DIR=Apache24\r\n");
                     sw.Close();
