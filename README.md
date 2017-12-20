@@ -28,6 +28,7 @@ FSCapture		截图工具
 
 2.PHP集成yaf框架,lumen,phalcon,php_apm,
 php_apm,php_bitset,php_seaslog,php_solr,
+php_ssh2,php_yaml
 php_sphinx,php_varnish
 等必备的扩展和开发工具
 
@@ -75,6 +76,11 @@ http://jingyan.baidu.com/article/4dc408488ff783c8d946f1e8.html
 ```
 
 ###相关链接
+- [v3.8.0.0](https://pan.baidu.com/s/1gfm03IV)
+ * 添加web管理界面
+ * FSCapture软件更新
+ * 代码优化
+
 - [v3.7.9.1](https://pan.baidu.com/s/1bpy5gIj)
  * memcache.php工具添加
  * memcache(www/cmd)启动bat
@@ -98,4 +104,8 @@ http://jingyan.baidu.com/article/4dc408488ff783c8d946f1e8.html
 
 ### 截图
 
-[![截图](/images/screen_2.jpg)](/images/screen_2.jpg)
+- Main
+[![截图](/images/screen_1.png)](/images/screen_2.png)
+
+- Web管理
+[![截图](/images/screen_2.png)](/images/screen_2.png)
