@@ -976,6 +976,11 @@ namespace MDserver
                 //log(hostsContent);
             }
 
+            var php_config = php_dir;
+            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir))
+            {
+                php_config = "php_default";
+            }
 
             //httpd.conf,php.ini替换
             string[] conf = {
@@ -998,6 +1003,7 @@ namespace MDserver
                 string r = _ReadContent(BaseDir + i);
                 r = r.Replace("MD:/", BaseDir);
                 r = r.Replace("{PHP_VER}", php_dir);
+                r = r.Replace("{PHP_CONF}", php_config);
                 r = r.Replace("{PHP_APACHE_MODULE}", php_apache_module);
                 r = r.Replace("{PHP_APACHE_DLL}", php_apache_dll);
                 r = r.Replace("{PHP_TS}", System.IO.Path.GetFileName(php_ts_dll_list[0]));
@@ -1010,18 +1016,22 @@ namespace MDserver
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias",
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php"
             };
+            
 
             foreach (var conf_i in conf_v_list)
             {
-                var fhost = Directory.GetFiles(conf_i, "*.conf");
-                foreach (var f in fhost)
-                {
-                    string r = _ReadContent(f);
-                    r = r.Replace("MD:/", BaseDir);
-                    r = r.Replace("{PHP_VER}", php_dir);
-                    r = r.Replace("{PHP_APACHE_DLL}", php_apache_dll);
-                    r = r.Replace("{PHP_TS}", System.IO.Path.GetFileName(php_ts_dll_list[0]));
-                    _WriteContent(f, r);
+                if (Directory.Exists(conf_i)) {
+                    var fhost = Directory.GetFiles(conf_i, "*.conf");
+                    foreach (var f in fhost)
+                    {
+                        string r = _ReadContent(f);
+                        r = r.Replace("MD:/", BaseDir);
+                        r = r.Replace("{PHP_VER}", php_dir);
+                        r = r.Replace("{PHP_CONF}", php_config);
+                        r = r.Replace("{PHP_APACHE_DLL}", php_apache_dll);
+                        r = r.Replace("{PHP_TS}", System.IO.Path.GetFileName(php_ts_dll_list[0]));
+                        _WriteContent(f, r);
+                    }
                 }
             }
         }
@@ -1058,6 +1068,11 @@ namespace MDserver
             string php_dir_pos = BaseDir + "bin/PHP/" + php_dir;
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
+            var php_config = php_dir;
+            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir))
+            {
+                php_config = "php_default";
+            }
 
             //删除自动生成的配置（apache vhost conf ）
             string vhostDir = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost\");
@@ -1100,6 +1115,7 @@ namespace MDserver
                 string r = _ReadContent(BaseDir + i);
                 r = r.Replace(BaseDir, "MD:/");
                 r = r.Replace(php_dir, "{PHP_VER}");
+                r = r.Replace(php_config, "{PHP_CONF}");
                 r = r.Replace("php7_module", "{PHP_APACHE_MODULE}");
                 r = r.Replace("php5_module", "{PHP_APACHE_MODULE}");
                 r = r.Replace("php5ts.dll", "{PHP_TS}");
@@ -1117,16 +1133,19 @@ namespace MDserver
 
             foreach (var conf_i in conf_v_list)
             {
-                var fhost = Directory.GetFiles(conf_i, "*.conf");
-                foreach (var f in fhost)
-                {
-                    string r = _ReadContent(f);
-                    r = r.Replace(BaseDir, "MD:/");
-                    r = r.Replace(php_dir, "{PHP_VER}");
-                    r = r.Replace(php_apache_dll, "{PHP_APACHE_DLL}");
-                    r = r.Replace("php5ts.dll", "{PHP_TS}");
-                    r = r.Replace("php7ts.dll", "{PHP_TS}");
-                    _WriteContent(f, r);
+                if (Directory.Exists(conf_i)) {
+                    var fhost = Directory.GetFiles(conf_i, "*.conf");
+                    foreach (var f in fhost)
+                    {
+                        string r = _ReadContent(f);
+                        r = r.Replace(BaseDir, "MD:/");
+                        r = r.Replace(php_dir, "{PHP_VER}");
+                        r = r.Replace(php_config, "{PHP_CONF}");
+                        r = r.Replace(php_apache_dll, "{PHP_APACHE_DLL}");
+                        r = r.Replace("php5ts.dll", "{PHP_TS}");
+                        r = r.Replace("php7ts.dll", "{PHP_TS}");
+                        _WriteContent(f, r);
+                    }
                 }
             }
         }
