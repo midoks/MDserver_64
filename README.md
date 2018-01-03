@@ -9,7 +9,7 @@ MDserverV3(PHP环境一键集成),文件采用7-Zip压缩,将解压缩到一个�
 这是64位版本的。
      
 1.MDserver集成了一下软件:
-PHP5.5.29(TS) | PHP7.1(TS)
+PHP55(TS) | PHP71(TS) | PHP72(TS)
 Apache2.4.7
 MySQL 5.6.24
 memcached
@@ -76,6 +76,8 @@ http://jingyan.baidu.com/article/4dc408488ff783c8d946f1e8.html
 ```
 
 ###相关链接
+ * 添加PHP72版本
+ * 更新扩展组件
 - [v3.8.0.0](https://pan.baidu.com/s/1gfm03IV)
  * 添加web管理界面
  * FSCapture软件更新
