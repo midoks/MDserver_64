@@ -977,7 +977,7 @@ namespace MDserver
             }
 
             var php_config = php_dir;
-            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir))
+            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir + ".conf"))
             {
                 php_config = "php_default";
             }
@@ -1016,11 +1016,12 @@ namespace MDserver
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias",
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php"
             };
-            
+
 
             foreach (var conf_i in conf_v_list)
             {
-                if (Directory.Exists(conf_i)) {
+                if (Directory.Exists(conf_i))
+                {
                     var fhost = Directory.GetFiles(conf_i, "*.conf");
                     foreach (var f in fhost)
                     {
@@ -1069,7 +1070,7 @@ namespace MDserver
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
             var php_config = php_dir;
-            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir))
+            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir + ".conf"))
             {
                 php_config = "php_default";
             }
@@ -1133,7 +1134,8 @@ namespace MDserver
 
             foreach (var conf_i in conf_v_list)
             {
-                if (Directory.Exists(conf_i)) {
+                if (Directory.Exists(conf_i))
+                {
                     var fhost = Directory.GetFiles(conf_i, "*.conf");
                     foreach (var f in fhost)
                     {
