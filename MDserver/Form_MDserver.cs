@@ -1007,7 +1007,8 @@ namespace MDserver
             //conf替换
             string[] conf_v_list = {
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost",
-                BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias"
+                BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias",
+                BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php"
             };
 
             foreach (var conf_i in conf_v_list)
@@ -1019,6 +1020,7 @@ namespace MDserver
                     r = r.Replace("MD:/", BaseDir);
                     r = r.Replace("{PHP_VER}", php_dir);
                     r = r.Replace("{PHP_APACHE_DLL}", php_apache_dll);
+                    r = r.Replace("{PHP_TS}", System.IO.Path.GetFileName(php_ts_dll_list[0]));
                     _WriteContent(f, r);
                 }
             }
@@ -1109,7 +1111,8 @@ namespace MDserver
             //conf替换
             string[] conf_v_list = {
                 BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost",
-                BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias"
+                BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\alias",
+                BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php"
             };
 
             foreach (var conf_i in conf_v_list)
@@ -1121,6 +1124,8 @@ namespace MDserver
                     r = r.Replace(BaseDir, "MD:/");
                     r = r.Replace(php_dir, "{PHP_VER}");
                     r = r.Replace(php_apache_dll, "{PHP_APACHE_DLL}");
+                    r = r.Replace("php5ts.dll", "{PHP_TS}");
+                    r = r.Replace("php7ts.dll", "{PHP_TS}");
                     _WriteContent(f, r);
                 }
             }
