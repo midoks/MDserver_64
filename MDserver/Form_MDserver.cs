@@ -1069,12 +1069,6 @@ namespace MDserver
             string php_dir_pos = BaseDir + "bin/PHP/" + php_dir;
             string apache_dir = this.ini.ReadString(@"MDSERVER", @"APACHE_DIR", @"Apache24");
 
-            var php_config = php_dir;
-            if (!System.IO.File.Exists(BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\php\" + php_dir + ".conf"))
-            {
-                php_config = "php_default";
-            }
-
             //删除自动生成的配置（apache vhost conf ）
             string vhostDir = (BaseDir.Replace("/", "\\") + @"bin\" + apache_dir + @"\conf\vhost\");
             var tmpVhost = Directory.GetFiles(vhostDir, "tmp_*.conf");
@@ -1115,8 +1109,9 @@ namespace MDserver
             {
                 string r = _ReadContent(BaseDir + i);
                 r = r.Replace(BaseDir, "MD:/");
+                r = r.Replace("php_default.conf", "{PHP_CONF}.conf");
+                r = r.Replace(php_dir + ".conf", "{PHP_CONF}.conf");
                 r = r.Replace(php_dir, "{PHP_VER}");
-                r = r.Replace(php_config, "{PHP_CONF}");
                 r = r.Replace("php7_module", "{PHP_APACHE_MODULE}");
                 r = r.Replace("php5_module", "{PHP_APACHE_MODULE}");
                 r = r.Replace("php5ts.dll", "{PHP_TS}");
@@ -1142,7 +1137,6 @@ namespace MDserver
                         string r = _ReadContent(f);
                         r = r.Replace(BaseDir, "MD:/");
                         r = r.Replace(php_dir, "{PHP_VER}");
-                        r = r.Replace(php_config, "{PHP_CONF}");
                         r = r.Replace(php_apache_dll, "{PHP_APACHE_DLL}");
                         r = r.Replace("php5ts.dll", "{PHP_TS}");
                         r = r.Replace("php7ts.dll", "{PHP_TS}");
