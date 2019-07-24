@@ -1,7 +1,7 @@
 # MDserver_64
 
 ### 说明
-一个款在Windows7,8,10 64位集成的PHP环境,一般WIN8,WIN10不带.NET,需要安装
+一个款在Windows7，8，10上64位集成的PHP环境，一般WIN8，WIN10不带.NET，需要安装。
 
 ### 详情
 ```
